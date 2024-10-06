@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import InventoryForm from './components/InventoryForm';
 import InventoryList from './components/InventoryList';
 import './App.css';
+import './index.css';
+
 
 const App = () => {
   const [inventory, setInventory] = useState([]);
