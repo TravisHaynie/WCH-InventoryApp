@@ -7,8 +7,12 @@ import './index.css';
 const App = () => {
   return (
     <div className="App">
-      <h1>Painting Company Inventory Tracker</h1>
-      <InventoryManager />
+      <div className="overlay"></div>
+      <div className="content">
+        <h1 className="header-title">WCH Precision Color</h1>
+        <p className="subtitle">Inventory Management System</p>
+        <InventoryManager />
+      </div>
     </div>
   );
 };

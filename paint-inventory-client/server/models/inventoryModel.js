@@ -1,14 +1,25 @@
 const mongoose = require('mongoose');
 
-const inventorySchema = new mongoose.Schema({
+// Define inventory item schema
+const itemSchema = new mongoose.Schema({
   item: {
     type: String,
-    required: true, // Ensure item is required
+    required: true,
   },
   quantity: {
     type: Number,
-    required: true, // Ensure quantity is required
+    required: true,
   },
 });
 
-module.exports = mongoose.model('Inventory', inventorySchema);
+// Define folder schema
+const folderSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  items: [itemSchema], // Array of inventory items
+});
+
+module.exports = mongoose.model('Folder', folderSchema);
