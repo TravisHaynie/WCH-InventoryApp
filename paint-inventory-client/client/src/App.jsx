@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import InventoryForm from './components/InventoryForm';
-import InventoryList from './components/InventoryList';
+import InventoryManager from './components/InventoryManager';
+
 import './App.css';
 import './index.css';
 
-
 const App = () => {
-  const [inventory, setInventory] = useState([]);
-
-  useEffect(() => {
-    fetch('/api/inventory')
-      .then((response) => response.json())
-      .then((data) => setInventory(data));
-  }, []);
-
   return (
     <div className="App">
       <h1>Painting Company Inventory Tracker</h1>
-      <InventoryForm setInventory={setInventory} />
-      <InventoryList inventory={inventory} />
+      <InventoryManager />
     </div>
   );
 };
 
 export default App;
+

@@ -1,18 +1,19 @@
+// /server/routes/inventoryRoutes.js
 const express = require('express');
 const router = express.Router();
 const {
-  getInventory,
-  addInventoryItem,
-  deleteInventoryItem,
+  getFolders,
+  createFolder,
+  updateFolder,
 } = require('../controllers/inventoryController');
 
-// GET all inventory items
-router.get('/', getInventory);
+// GET all folders
+router.get('/folders', getFolders);
 
-// POST a new inventory item
-router.post('/', addInventoryItem);
+// POST a new folder with inventory items
+router.post('/folders', createFolder);
 
-// DELETE an inventory item by ID
-router.delete('/:id', deleteInventoryItem);
+// PUT (update) an existing folder by adding more inventory items
+router.put('/folders/:id', updateFolder);
 
 module.exports = router;
