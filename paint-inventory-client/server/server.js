@@ -2,6 +2,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const inventoryRoutes = require('./routes/inventoryRoutes');
+
+
 
 // Load environment variables from .env file
 dotenv.config(); // This must be called before accessing environment variables
@@ -11,6 +14,7 @@ const app = express();
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
+app.use('/api/inventory', inventoryRoutes);
 
 // Define a simple route for testing
 app.get('/', (req, res) => {
