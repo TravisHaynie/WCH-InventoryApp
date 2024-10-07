@@ -1,6 +1,6 @@
 [build]
-  base = "."                            # Base directory for the project (root)
-  publish = "paint-inventory-client/client/dist"  # Directory containing the built files
+  base = "."                            # Root directory for the project
+  publish = "client/dist"               # Directory where built files are located
   command = "npm run build-client"      # Command to build the client app
 
 [[redirects]]
