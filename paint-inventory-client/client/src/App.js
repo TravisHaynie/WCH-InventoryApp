@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import InventoryForm from './components/InventoryFormTemp';
-import InventoryList from './components/InventoryListTemp';
+import InventoryForm from './components/InventoryForm';
+import InventoryList from './components/InventoryList';
 import './App.css';
 
 const App = () => {
