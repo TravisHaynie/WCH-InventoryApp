@@ -32,7 +32,7 @@ const InventoryManager = () => {
       // Create a new folder if one doesn't exist
       const newFolder = { name: folderName, items: [item] };
       try {
-        const response = await fetch('/api/inventory/folders', {
+        const response = await fetch(`${baseURL}/api/inventory/folders`, { // Use baseURL here
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newFolder),
@@ -47,7 +47,7 @@ const InventoryManager = () => {
       // Update an existing folder with the new item
       const updatedFolder = { items: [item] }; // Properly structure items
       try {
-        const response = await fetch(`/api/inventory/folders/${folder._id}`, {
+        const response = await fetch(`${baseURL}/api/inventory/folders/${folder._id}`, { // Use baseURL here
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updatedFolder), // Only update the items
@@ -62,7 +62,6 @@ const InventoryManager = () => {
   
     setInventory([]); // Clear the inventory after saving
   };
-  
   
   return (
     <div>
