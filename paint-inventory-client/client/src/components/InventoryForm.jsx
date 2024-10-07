@@ -22,9 +22,7 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
         const newItem = { item, quantity };
         const folderName = newFolderName || selectedFolder;
 
-        console.log('Adding item:', newItem, 'to folder:', folderName);
-
-        saveInventoryToFolder(folderName, newItem); // Pass newItem to saveInventoryToFolder
+        saveInventoryToFolder(folderName, newItem);
 
         // Reset form fields
         setItem('');
@@ -34,12 +32,12 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
     };
 
     return (
-        <div className="card mb-4">
+        <div className="card mb-4" style={{ backgroundColor: '#333333', border: '1px solid #e0e0e0' }}>
             <div className="card-body">
-                <h2 className="card-title">Add Inventory</h2>
+                <h2 className="card-title" style={{ color: '#FFA500' }}>Add Inventory</h2> {/* Orange text */}
                 <form onSubmit={handleSubmit}>
                     <div className="mb-3">
-                        <label className="form-label">Item Name:</label>
+                        <label className="form-label" style={{ color: '#FFA500' }}>Item Name:</label> {/* Orange text */}
                         <input
                             type="text"
                             value={item}
@@ -49,7 +47,7 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Quantity:</label>
+                        <label className="form-label" style={{ color: '#FFA500' }}>Quantity:</label> {/* Orange text */}
                         <input
                             type="number"
                             value={quantity}
@@ -59,7 +57,7 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Select Folder:</label>
+                        <label className="form-label" style={{ color: '#FFA500' }}>Select Folder:</label> {/* Orange text */}
                         <select
                             value={selectedFolder}
                             onChange={(e) => setSelectedFolder(e.target.value)}
@@ -74,7 +72,7 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
                         </select>
                     </div>
                     <div className="mb-3">
-                        <label className="form-label">Or Create New Folder:</label>
+                        <label className="form-label" style={{ color: '#FFA500' }}>Or Create New Folder:</label> {/* Orange text */}
                         <input
                             type="text"
                             value={newFolderName}
@@ -92,4 +90,4 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
     );
 };
 
-export default InventoryForm; // Ensure this line exists
+export default InventoryForm;
