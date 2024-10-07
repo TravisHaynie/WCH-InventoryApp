@@ -1,11 +1,10 @@
 [build]
-  base = "client"                       # Base directory for the React app
-  publish = "client/dist"                # Directory containing the built files
-  command = "npm install && npm run build" # Command to build the app
+  base = "."                            # Base directory for the project (root)
+  publish = "paint-inventory-client/client/dist"  # Directory containing the built files
+  command = "npm run build-client"      # Command to build the client app
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
   force = true
-
