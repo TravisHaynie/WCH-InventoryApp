@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import InventoryForm from './InventoryForm';
-import InventoryList from './InventoryList';
+import InventoryForm from './InventoryFormTemp';
+import InventoryList from './InventoryListTemp';
 
 const InventoryManager = () => {
   const [folders, setFolders] = useState([]);
