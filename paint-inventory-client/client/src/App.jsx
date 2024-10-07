@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import InventoryForm from './components/InventoryForm';
+import InventoryList from './components/InventoryList';
 import InventoryManager from './components/InventoryManager';
+import './App.css';
 
+// Function to create colorful title
 const colorfulTitle = (title) => {
   const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FFCC33', '#57FF33', '#9933FF', '#FF3333'];
 
@@ -12,6 +16,15 @@ const colorfulTitle = (title) => {
 };
 
 const App = () => {
+  const [inventory, setInventory] = useState([]);
+
+  useEffect(() => {
+    // Fetch initial inventory from backend
+    fetch('/api/inventory')
+      .then(response => response.json())
+      .then(data => setInventory(data));
+  }, []);
+
   return (
     <div style={{ backgroundColor: '#f0f0f0', height: '100vh', color: 'white' }}> {/* Light gray background for the app */}
       <header style={{
@@ -29,14 +42,15 @@ const App = () => {
             {colorfulTitle('WCH Precision Color')}
           </h1>
         </div>
-        <div style={{
-          // Shadow for better visibility
-        }}>
-          <p className="subtitle" >Inventory Management System</p>
+        <div>
+          <p className="subtitle">Inventory Management System</p>
         </div>
       </header>
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
         <InventoryManager />
+        {/* You can also keep the InventoryForm and InventoryList if needed */}
+        {/* <InventoryForm setInventory={setInventory} />
+        <InventoryList inventory={inventory} /> */}
       </div>
     </div>
   );
