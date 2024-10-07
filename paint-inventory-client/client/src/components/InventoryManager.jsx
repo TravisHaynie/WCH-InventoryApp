@@ -6,71 +6,113 @@ const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrend
 
 const InventoryManager = () => {
   const [folders, setFolders] = useState([]);
-  const [inventory, setInventory] = useState([]);
 
   const fetchFolders = async () => {
     try {
       const response = await fetch(`${baseURL}/api/inventory/folders`);
       const data = await response.json();
-      console.log('Fetched folders:', data);
       setFolders(data);
     } catch (error) {
       console.error('Error fetching folders:', error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchFolders();
   }, []);
 
   const saveInventoryToFolder = async (folderName, item) => {
-    console.log('Saving inventory to folder:', folderName, item);
-  
     const folder = folders.find((f) => f.name === folderName);
-  
+
     if (!folder) {
-      // Create a new folder if one doesn't exist
       const newFolder = { name: folderName, items: [item] };
       try {
-        const response = await fetch(`${baseURL}/api/inventory/folders`, { // Use baseURL here
+        const response = await fetch(`${baseURL}/api/inventory/folders`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newFolder),
         });
         const data = await response.json();
-        setFolders([...folders, data]); // Update the folders in the state
-        console.log('New folder created with items:', data);
+        setFolders([...folders, data]);
       } catch (error) {
         console.error('Error creating folder:', error);
       }
     } else {
-      // Update an existing folder with the new item
-      const updatedFolder = { items: [item] }; // Properly structure items
+      const updatedFolder = { items: [item] };
       try {
-        const response = await fetch(`${baseURL}/api/inventory/folders/${folder._id}`, { // Use baseURL here
+        const response = await fetch(`${baseURL}/api/inventory/folders/${folder._id}`, {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedFolder), // Only update the items
+          body: JSON.stringify(updatedFolder),
         });
         const data = await response.json();
-        console.log('Folder updated with items:', data);
-        fetchFolders(); // Re-fetch folders to update the UI
+        fetchFolders();
       } catch (error) {
         console.error('Error updating folder:', error);
       }
     }
-  
-    setInventory([]); // Clear the inventory after saving
   };
-  
+
+  const deleteFolder = async (folderId) => {
+    try {
+      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setFolders(folders.filter((folder) => folder._id !== folderId));
+      }
+    } catch (error) {
+      console.error('Error deleting folder:', error);
+    }
+  };
+
+  const deleteItem = async (folderId, itemId) => {
+    try {
+      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        fetchFolders(); // Refresh the list
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
+
+  const updateQuantity = async (folderId, itemId, amount) => {
+    const folder = folders.find((f) => f._id === folderId);
+    const item = folder.items.find((i) => i._id === itemId);
+
+    const updatedItem = { ...item, quantity: item.quantity + amount };
+    if (updatedItem.quantity < 0) return; // Prevent negative quantities
+
+    try {
+      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedItem),
+      });
+      if (response.ok) {
+        fetchFolders(); // Refresh the list
+      }
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+    }
+  };
+
   return (
     <div>
       <InventoryForm
-        addInventoryItem={setInventory}
+        addInventoryItem={setFolders}
         folders={folders}
         saveInventoryToFolder={saveInventoryToFolder}
       />
-      <InventoryList folders={folders} />
+      <InventoryList
+        folders={folders}
+        deleteFolder={deleteFolder}
+        deleteItem={deleteItem}
+        updateQuantity={updateQuantity}
+      />
     </div>
   );
 };
