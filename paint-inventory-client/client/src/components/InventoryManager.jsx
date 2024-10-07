@@ -45,8 +45,7 @@ const InventoryManager = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updatedFolder),
         });
-        const data = await response.json();
-        fetchFolders();
+        fetchFolders(); // Refresh after update
       } catch (error) {
         console.error('Error updating folder:', error);
       }
@@ -72,7 +71,7 @@ const InventoryManager = () => {
         method: 'DELETE',
       });
       if (response.ok) {
-        fetchFolders(); // Refresh the list
+        fetchFolders(); // Refresh after deletion
       }
     } catch (error) {
       console.error('Error deleting item:', error);
