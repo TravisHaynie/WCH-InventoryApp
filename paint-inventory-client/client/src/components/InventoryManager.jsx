@@ -2,20 +2,22 @@ import React, { useState, useEffect } from 'react';
 import InventoryForm from './InventoryForm';
 import InventoryList from './InventoryList';
 
+const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
+
 const InventoryManager = () => {
   const [folders, setFolders] = useState([]);
   const [inventory, setInventory] = useState([]);
 
   const fetchFolders = async () => {
     try {
-      const response = await fetch('/api/inventory/folders');
+      const response = await fetch(`${baseURL}/api/inventory/folders`);
       const data = await response.json();
-      setFolders(data);
       console.log('Fetched folders:', data);
+      setFolders(data);
     } catch (error) {
       console.error('Error fetching folders:', error);
     }
-  };
+  }
 
   useEffect(() => {
     fetchFolders();
