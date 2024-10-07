@@ -9,7 +9,7 @@
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "install": "cd server && npm install && cd ../client && npm install",
     "seed": "cd server && npm run seed",
-    "build-client": "npm --prefix client install && npm --prefix client run build"  // Updated line
+    "build-client": "npm --prefix client install && npm --prefix client run build"  
   },
   "author": "",
   "license": "ISC",
