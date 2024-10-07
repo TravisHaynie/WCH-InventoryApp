@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const inventoryRoutes = require('./routes/inventoryRoutes');
-
+const cors = require('cors');
+const path = require('path');
 
 
 // Load environment variables from .env file
@@ -15,12 +16,18 @@ const app = express();
 // Middleware to parse incoming JSON requests
 app.use(express.json());
 app.use('/api/inventory', inventoryRoutes);
+app.use(express.static(path.join(__dirname, '../client/dist')));
+// Enable CORS for all origins (You can restrict this to specific origins if needed)
+app.use(cors());
 
 // Define a simple route for testing
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
+  });
 // Connect to MongoDB using Mongoose
 const connectDB = async () => {
   try {
