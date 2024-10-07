@@ -1,0 +1,10 @@
+[build]
+  base = "client"            # Directory where the React app is located
+  publish = "client/build"   # Directory containing the built files
+  command = "npm install && npm run build"  # Build command
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = true
