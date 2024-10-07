@@ -1,7 +1,7 @@
 [build]
-  base = "client"            # Directory where the React app is located
-  publish = "client/build"   # Directory containing the built files
-  command = "npm install && npm run build"  # Build command
+  base = "paint-inventory-client/client"  # Base directory for the build
+  publish = "paint-inventory-client/client/dist"  # Directory containing the built files
+  command = "npm install && npm run build"  # Command to build the app
 
 [[redirects]]
   from = "/*"
