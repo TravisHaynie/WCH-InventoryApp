@@ -1,7 +1,7 @@
 [build]
   base = "client"                       # Base directory for the React app
   publish = "client/dist"                # Directory containing the built files
-  command = "npm install && npm run build"  # Build command
+  command = "npm install && npm run build" # Build command
 
 [[redirects]]
   from = "/*"
