@@ -1,7 +1,20 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
+import React, { useState } from 'react';
 
 const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) => {
+  const [inputValues, setInputValues] = useState({});
+
+  const handleInputChange = (folderId, itemId, value) => {
+    setInputValues({
+      ...inputValues,
+      [`${folderId}-${itemId}`]: value,
+    });
+  };
+
+  const handleSaveQuantity = (folderId, itemId) => {
+    const newValue = inputValues[`${folderId}-${itemId}`];
+    updateQuantity(folderId, itemId, newValue);
+  };
+
   return (
     <div className="card" style={{ backgroundColor: '#333333', border: '1px solid #e0e0e0', padding: '10px', borderRadius: '8px' }}>
       <h2 className="mb-4" style={{ color: '#FFA500' }}>Folders</h2> {/* Orange text */}
@@ -23,20 +36,21 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                 {folder.items && folder.items.length > 0 ? (
                   folder.items.map((item) => (
                     <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: '#FFA500' }}>
-                      <span>{item.item} - Quantity: {item.quantity}</span>
+                      <span>{item.item}</span>
                       <div>
-                        {/* Buttons to adjust quantity */}
+                        {/* Text/Number Input for quantity */}
+                        <input 
+                          type="text" 
+                          value={inputValues[`${folder._id}-${item._id}`] || item.quantity} 
+                          onChange={(e) => handleInputChange(folder._id, item._id, e.target.value)} 
+                          className="form-control form-control-sm" 
+                          style={{ width: '100px', display: 'inline-block', marginRight: '10px' }} 
+                        />
                         <button 
-                          onClick={() => updateQuantity(folder._id, item._id, item.quantity - 1)} // Decrement
-                          className="btn btn-warning btn-sm" 
+                          onClick={() => handleSaveQuantity(folder._id, item._id)} 
+                          className="btn btn-primary btn-sm" 
                           style={{ marginRight: '5px' }}>
-                          <i className="bi bi-dash-circle"></i> {/* Bootstrap minus icon */}
-                        </button>
-                        <button 
-                          onClick={() => updateQuantity(folder._id, item._id, item.quantity + 1)} // Increment
-                          className="btn btn-success btn-sm" 
-                          style={{ marginRight: '5px' }}>
-                          <i className="bi bi-plus-circle"></i> {/* Bootstrap plus icon */}
+                          Save
                         </button>
                         {/* Delete Item Button */}
                         <button 
