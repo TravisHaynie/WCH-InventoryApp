@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
 
 const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) => {
   return (
@@ -11,6 +11,7 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="card-title" style={{ color: '#FFA500' }}>{folder.name}</h5>
+                {/* Delete Folder Button */}
                 <button 
                   onClick={() => deleteFolder(folder._id)} 
                   className="btn btn-danger btn-sm" 
@@ -21,27 +22,31 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
               <ul className="list-group list-group-flush">
                 {folder.items && folder.items.length > 0 ? (
                   folder.items.map((item) => (
-                    <li key={item._id} className="list-group-item item-container" style={{ color: '#FFA500' }}>
+                    <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: '#FFA500' }}>
                       <span>{item.item} - Quantity: {item.quantity}</span>
                       <div className="item-actions">
-                        {/* Increment/Decrement Buttons */}
+                        {/* Decrement Button */}
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, -1)} 
-                          className="btn btn-warning btn-sm" 
-                          style={{ marginRight: '5px' }}>
-                          <i className="bi bi-dash-circle"></i>
+                          className="decrement-btn"
+                        >
+                          − {/* Minus sign */}
                         </button>
+
+                        {/* Increment Button */}
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, 1)} 
-                          className="btn btn-success btn-sm" 
-                          style={{ marginRight: '5px' }}>
-                          <i className="bi bi-plus-circle"></i>
+                          className="increment-btn"
+                        >
+                          + {/* Plus sign */}
                         </button>
+
                         {/* Delete Item Button */}
                         <button 
                           onClick={() => deleteItem(folder._id, item._id)} 
-                          className="btn btn-danger btn-sm">
-                          <i className="bi bi-trash"></i> Delete
+                          className="delete-btn"
+                        >
+                          🗑 {/* Trash icon */}
                         </button>
                       </div>
                     </li>

@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-size: cover; /* Cover the entire viewport */
+  background-size: cover;
   background-position: center;
 }
 
@@ -10,22 +10,21 @@ body {
 .header-title {
   font-size: 3rem;
   font-weight: bold;
-  color: white; /* White text for contrast with translucent background */
+  color: white;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  text-align: center; /* Center the title */
+  text-align: center;
 }
 
-/* Adjust title size for smaller screens */
 @media (max-width: 768px) {
   .header-title {
-    font-size: 1.8rem; /* Smaller font size for mobile */
-    line-height: 1.2; /* Adjust line-height to reduce stacking */
+    font-size: 1.8rem;
+    line-height: 1.2;
   }
 }
 
 @media (max-width: 480px) {
   .header-title {
-    font-size: 1.5rem; /* Even smaller font size for very small screens */
+    font-size: 1.5rem;
     line-height: 1.1;
   }
 }
@@ -51,7 +50,7 @@ body {
 
 /* Button styling */
 .btn-primary {
-  background-color: #FF5733; /* Bright orange button */
+  background-color: #FF5733;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -61,16 +60,16 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #FF33A1; /* Bright pink hover effect */
+  background-color: #FF33A1;
 }
 
-/* Card styling for folders and items */
+/* Card styling */
 .card {
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  border: 2px solid #FF5733; /* Match with button colors */
+  border: 2px solid #FF5733;
 }
 
 /* Footer styling */
@@ -83,13 +82,6 @@ footer {
   position: fixed;
   width: 100%;
   bottom: 0;
-}
-
-/* General button styling */
-button {
-  padding: 10px;
-  margin: 5px;
-  border-radius: 5px;
 }
 
 /* Inventory List Styling */
@@ -105,12 +97,12 @@ button {
   gap: 10px;
 }
 
-/* For screens smaller than 768px (typical mobile sizes) */
+/* For screens smaller than 768px */
 @media (max-width: 768px) {
   .item-container {
     display: flex;
-    flex-direction: column; /* Stack items and buttons vertically */
-    align-items: flex-start; /* Align items to the left */
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .item-actions {
@@ -121,12 +113,12 @@ button {
   }
 
   .item-actions button {
-    flex: 1; /* Make buttons take up more space */
+    flex: 1;
     margin: 2px;
   }
 }
 
-/* For screens larger than 768px (desktop, tablets) */
+/* For screens larger than 768px */
 @media (min-width: 769px) {
   .item-container {
     display: flex;
@@ -140,35 +132,34 @@ button {
   }
 }
 
-/* Increment and delete buttons for smaller screens */
-@media (max-width: 768px) {
-  .increment-btn {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-    text-align: center;
-    background-color: #FFA500;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-left: 10px;
-  }
+/* Increment and delete buttons */
+.increment-btn, .decrement-btn {
+  width: 35px;
+  height: 35px;
+  font-size: 1.5rem;
+  text-align: center;
+  background-color: transparent;
+  color: black;
+  border: 2px solid #FFA500; /* Orange border */
+  border-radius: 50%;
+  margin-left: 10px;
+}
 
-  .increment-btn:hover {
-    background-color: #FF5733; /* Bright orange hover */
-  }
+.increment-btn:hover, .decrement-btn:hover {
+  background-color: #FFA500; /* Orange background on hover */
+  color: white;
+}
 
-  .delete-btn {
-    width: 35px;
-    height: 35px;
-    font-size: 1.2rem;
-    background-color: red;
-    color: white;
-    border: none;
-    border-radius: 5px;
-  }
+.delete-btn {
+  width: 35px;
+  height: 35px;
+  font-size: 1.5rem;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
 
-  .delete-btn:hover {
-    background-color: #FF5733;
-  }
+.delete-btn:hover {
+  background-color: #FF5733;
 }
