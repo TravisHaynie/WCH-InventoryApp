@@ -10,23 +10,7 @@ body {
 .header-title {
   font-size: 3rem;
   font-weight: bold;
-  color: white;
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  text-align: center;
-}
-
-@media (max-width: 768px) {
-  .header-title {
-    font-size: 1.8rem;
-    line-height: 1.2;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-title {
-    font-size: 1.5rem;
-    line-height: 1.1;
-  }
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Slight shadow for title clarity */
 }
 
 /* Form styling */
@@ -49,48 +33,18 @@ body {
 }
 
 /* Button styling */
-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 35px;
-  height: 35px;
-  font-size: 1.5rem;
-  text-align: center;
-  background-color: #FFA500;
-  color: white;
+.btn-primary {
+  background-color: #FF5733; /* Bright orange button */
   border: none;
-  border-radius: 50%;
-  margin-left: 10px;
-  transition: transform 0.2s ease;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1.2em;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #FF5733;
-  transform: scale(1.1);
-}
-
-/* Increment and Decrement Buttons */
-.increment-btn, .decrement-btn {
-  width: 40px; /* Ensure width and height are the same for perfect circles */
-  height: 40px;
-  border-radius: 50%; /* Ensure buttons remain circular */
-  font-size: 1.2rem; /* Font size adjusted for smaller screens */
-}
-
-/* Delete Button */
-.delete-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  background-color: red;
-  transition: transform 0.2s ease;
-}
-
-.delete-btn:hover {
-  background-color: #FF5733;
-  transform: scale(1.1);
+.btn-primary:hover {
+  background-color: #FF33A1; /* Bright pink hover effect */
 }
 
 /* Card styling for folders and items */
@@ -99,15 +53,21 @@ button:hover {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  border: 2px solid #FF5733;
+  border: 2px solid #FF5733; /* Match with button colors */
 }
 
 .card-background {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+  background-color: #f9f9f9; /* Light gray background */
+  border: 1px solid #e0e0e0; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside the card */
+  margin-bottom: 20px; /* Space between cards */
+}
+
+/* Inventory Item Text */
+.list-group-item {
+  font-weight: bold;
+  color: black; /* Make the item text bold and black for better visibility */
 }
 
 /* Footer styling */
@@ -129,12 +89,12 @@ button {
   border-radius: 5px;
 }
 
-/* For smaller screens */
+/* For screens smaller than 768px (typical mobile sizes) */
 @media (max-width: 768px) {
   .item-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column; /* Stack items and buttons vertically */
+    align-items: flex-start; /* Align items to the left */
   }
 
   .item-actions {
@@ -145,22 +105,36 @@ button {
   }
 
   .item-actions button {
-    flex: 1;
+    flex: 1; /* Make buttons take up more space */
     margin: 2px;
-    font-size: 1rem;
+  }
+
+  .increment-btn, .decrement-btn, .delete-btn {
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 40px;
     height: 40px;
+    background-color: #FF5733; /* Bright background color */
+  }
+
+  .increment-btn:hover, .decrement-btn:hover, .delete-btn:hover {
+    transform: scale(1.1); /* Slight zoom on hover for feedback */
   }
 
   .delete-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.5rem;
     background-color: red;
+  }
+
+  /* Title styling for smaller screens */
+  .header-title {
+    font-size: 2.2rem; /* Smaller title on mobile screens */
   }
 }
 
-/* For larger screens */
+/* For screens larger than 768px (desktop, tablets) */
 @media (min-width: 769px) {
   .item-container {
     display: flex;
@@ -173,14 +147,27 @@ button {
     gap: 10px;
   }
 
-  .increment-btn, .decrement-btn {
-    font-size: 1.5rem;
+  .increment-btn, .decrement-btn, .delete-btn {
+    padding: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 50px;
     height: 50px;
+    background-color: #FF5733; /* Bright background color */
+  }
+
+  .increment-btn:hover, .decrement-btn:hover, .delete-btn:hover {
+    transform: scale(1.1); /* Slight zoom on hover for feedback */
   }
 
   .delete-btn {
-    width: 50px;
-    height: 50px;
+    background-color: red;
+  }
+
+  /* Title styling for larger screens */
+  .header-title {
+    font-size: 3rem;
   }
 }
