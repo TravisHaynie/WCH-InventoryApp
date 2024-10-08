@@ -2,10 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f9f9f9; /* Fallback background */
-  /* Uncomment the background image if needed */
-  /* background-image: url('./paint-inventory-client/client/src/assets/dad.jpg'); */
-  background-size: cover;
+  background-size: cover; /* Cover the entire viewport */
   background-position: center;
 }
 
@@ -14,7 +11,23 @@ body {
   font-size: 3rem;
   font-weight: bold;
   color: white; /* White text for contrast with translucent background */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  text-align: center; /* Center the title */
+}
+
+/* Adjust title size for smaller screens */
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 1.8rem; /* Smaller font size for mobile */
+    line-height: 1.2; /* Adjust line-height to reduce stacking */
+  }
+}
+
+@media (max-width: 480px) {
+  .header-title {
+    font-size: 1.5rem; /* Even smaller font size for very small screens */
+    line-height: 1.1;
+  }
 }
 
 /* Form styling */
@@ -38,7 +51,7 @@ body {
 
 /* Button styling */
 .btn-primary {
-  background-color: #FF5733; 
+  background-color: #FF5733; /* Bright orange button */
   border: none;
   color: white;
   padding: 10px 20px;
@@ -48,20 +61,7 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #FF33A1; 
-}
-
-.btn-increment {
-  background-color: #28a745; /* Green */
-}
-
-.btn-decrement {
-  background-color: #ffc107; /* Yellow */
-}
-
-.btn-delete {
-  background-color: #dc3545; /* Red */
-  margin-left: auto;
+  background-color: #FF33A1; /* Bright pink hover effect */
 }
 
 /* Card styling for folders and items */
@@ -70,14 +70,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  border: 2px solid #FF5733;
-}
-.card-background {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
+  border: 2px solid #FF5733; /* Match with button colors */
 }
 
 /* Footer styling */
@@ -99,28 +92,41 @@ button {
   border-radius: 5px;
 }
 
-/* Mobile screen adjustments */
+/* Inventory List Styling */
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* For screens smaller than 768px (typical mobile sizes) */
 @media (max-width: 768px) {
   .item-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column; /* Stack items and buttons vertically */
+    align-items: flex-start; /* Align items to the left */
   }
 
   .item-actions {
     display: flex;
-    flex-direction: column; /* Stack buttons vertically */
+    justify-content: space-between;
     width: 100%;
     margin-top: 10px;
   }
 
   .item-actions button {
-    width: 100%; /* Ensure buttons take full width */
-    margin-bottom: 10px;
+    flex: 1; /* Make buttons take up more space */
+    margin: 2px;
   }
 }
 
-/* Desktop adjustments */
+/* For screens larger than 768px (desktop, tablets) */
 @media (min-width: 769px) {
   .item-container {
     display: flex;
@@ -131,5 +137,38 @@ button {
   .item-actions {
     display: flex;
     gap: 10px;
+  }
+}
+
+/* Increment and delete buttons for smaller screens */
+@media (max-width: 768px) {
+  .increment-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    text-align: center;
+    background-color: #FFA500;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+
+  .increment-btn:hover {
+    background-color: #FF5733; /* Bright orange hover */
+  }
+
+  .delete-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 1.2rem;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+
+  .delete-btn:hover {
+    background-color: #FF5733;
   }
 }
