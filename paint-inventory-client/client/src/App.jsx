@@ -53,14 +53,20 @@ const App = () => {
   }, []);
 
   const handleDateChange = (date) => {
+    console.log("Selected Date: ", date);
+  
     setSelectedDate(date);
-
+  
     // Find the log for the selected date and update the selected inventory
     const selectedLog = logs.find(log => log.date === date);
     if (selectedLog) {
+      console.log("Selected Inventory: ", selectedLog.inventory); // Log the inventory data
       setSelectedInventory(selectedLog.inventory); // Set the inventory data for the selected date
+    } else {
+      console.log("No log found for this date.");
     }
   };
+  
 
   return (
     <div style={{ backgroundColor: '#f0f0f0', height: '100vh', color: 'white' }}>

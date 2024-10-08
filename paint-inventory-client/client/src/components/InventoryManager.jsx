@@ -19,14 +19,15 @@ const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventor
   };
 
   useEffect(() => {
-    if (inventory && Array.isArray(inventory)) {
-      // Use the passed inventory if available
+    if (inventory && inventory.length > 0) {
+      console.log("Inventory for selected date: ", inventory); // Log the inventory data
       setFolders(inventory);
     } else if (selectedDate) {
-      // Fetch inventory if no logs were passed
+      console.log("No inventory passed, fetching for selected date: ", selectedDate); // Log the fetch
       fetchFolders(selectedDate);
     }
-  }, [selectedDate, inventory]);  // Ensure `inventory` and `selectedDate` are dependencies
+  }, [selectedDate, inventory]);
+   // Ensure `inventory` and `selectedDate` are dependencies
 
   const saveInventoryToFolder = async (folderName, item) => {
     const folder = folders.find((f) => f.name === folderName);
