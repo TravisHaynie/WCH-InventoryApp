@@ -1,20 +1,18 @@
 import React from 'react';
 
-const LogDropdown = ({ logs, selectedDate, handleDateChange }) => {
+const LogDropdown = ({ logs, selectedDate, onDateChange }) => {
   return (
     <div>
-      <label htmlFor="logDropdown" style={{ marginRight: '10px', fontWeight: 'bold' }}>View Logs:</label>
+      <label htmlFor="log-dropdown">Select Date: </label>
       <select
-        id="logDropdown"
+        id="log-dropdown"
         value={selectedDate}
-        onChange={handleDateChange}
-        className="form-select"
-        style={{ width: '200px', display: 'inline-block' }}
+        onChange={(e) => onDateChange(e.target.value)}
       >
-        <option value="">Select a date</option>
+        <option value="">Select a log</option>
         {logs.map((log, index) => (
           <option key={index} value={log.date}>
-            {new Date(log.date).toLocaleDateString()}
+            {new Date(log.date).toLocaleDateString()} {/* Display the log date */}
           </option>
         ))}
       </select>

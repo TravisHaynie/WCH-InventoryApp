@@ -28,22 +28,24 @@ const App = () => {
       // Check if today's log already exists
       const todayLogExists = fetchedLogs.some(log => log.date === today);
   
-      // If today's log doesn't exist, manually add it to the logs
+      // If today's log doesn't exist, fetch inventory data for today
       if (!todayLogExists) {
         const todayResponse = await fetch(`${baseURL}/api/inventory/folders?date=${today}`);
-        const todayLog = await todayResponse.json();
+        const todayInventory = await todayResponse.json();
   
-        // If there's inventory data for today, add it to logs
-        if (todayLog.length > 0) {
-          fetchedLogs.push({ date: today, inventory: todayLog });
+        // If there's inventory data for today, create a log and add it to the logs
+        if (todayInventory.length > 0) {
+          const todayLog = { date: today, inventory: todayInventory };
+          fetchedLogs.unshift(todayLog);  // Add today's log at the beginning
         }
       }
   
-      setLogs(fetchedLogs);  // Set logs including today if available
+      setLogs(fetchedLogs);  // Set logs including today's log if available
     } catch (error) {
       console.error('Error fetching logs:', error);
     }
   };
+  
   
 
   useEffect(() => {
