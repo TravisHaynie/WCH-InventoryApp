@@ -32,24 +32,24 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
 
   return (
     <div className="card" style={{ backgroundColor: '#333333', border: '1px solid #e0e0e0', padding: '10px', borderRadius: '8px' }}>
-      <h2 className="mb-4" style={{ color: '#FFA500' }}>Folders</h2> {/* Orange text */}
+      <h2 className="mb-4" style={{ color: '#FFA500' }}>Folders</h2>
       {folders.length > 0 ? (
         folders.map((folder) => (
           <div key={folder._id} className="card mb-3" style={{ backgroundColor: '#444444', color: '#FFA500' }}>
             <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center">
-                <h5 className="card-title" style={{ color: '#FFA500' }}>{folder.name}</h5>
-                <div>
+              <div className="d-flex justify-content-between align-items-center folder-header">
+                <h5 className="folder-title" style={{ color: '#FFA500', flexGrow: 1 }}>{folder.name}</h5> {/* Folder title */} 
+                <div className="folder-actions">
                   <button 
                     onClick={() => handleDownloadFolder(folder)} 
                     className="btn btn-info btn-sm"
                     style={{ marginRight: '10px' }}>
-                    <i className="bi bi-download"></i>  PDF
+                    PDF
                   </button>
                   <button 
                     onClick={() => handleDeleteFolder(folder._id)} 
                     className="delete-btn btn btn-danger btn-sm">
-                    <i className="bi bi-trash"></i> Del
+                    Del
                   </button>
                 </div>
               </div>
@@ -58,31 +58,31 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                   folder.items.map((item) => (
                     <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: 'black' }}>
                       <span>{item.item} - Quantity: {item.quantity}</span>
-                      <div className="d-flex align-items-center">
+                      <div className="d-flex align-items-center item-actions">
                         {/* Buttons to adjust quantity */}
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, -1)} 
-                          className="increment-btn btn btn-warning btn-sm"
+                          className="increment-btn btn btn-link btn-sm"
                           style={{ marginRight: '5px' }}>
                           -
                         </button>
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, 1)} 
-                          className="increment-btn btn btn-success btn-sm"
+                          className="increment-btn btn btn-link btn-sm"
                           style={{ marginRight: '5px' }}>
                           +
                         </button>
-                        {/* Restore Delete Item Button with trashcan icon */}
+                        {/* Delete Item Button */}
                         <button 
                           onClick={() => handleDeleteItem(folder._id, item._id)} 
-                          className="delete-btn btn btn-danger btn-sm">
+                          className="delete-btn btn btn-danger btn-sm delete-item-btn">
                           <i className="bi bi-trash"></i>
                         </button>
                       </div>
                     </li>
                   ))
                 ) : (
-                  <li className="list-group-item" style={{ color: 'black' }}>No items in this folder</li>
+                  <li className="list-group-item" style={{ color: '#FFA500' }}>No items in this folder</li>
                 )}
               </ul>
             </div>
