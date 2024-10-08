@@ -58,12 +58,15 @@ const InventoryManager = () => {
         method: 'DELETE',
       });
       if (response.ok) {
-        setFolders(folders.filter((folder) => folder._id !== folderId));
+        setFolders(folders.filter((folder) => folder._id !== folderId)); // Remove folder from the UI
+      } else {
+        console.error('Failed to delete folder');
       }
     } catch (error) {
       console.error('Error deleting folder:', error);
     }
   };
+  
 
   const deleteItem = async (folderId, itemId) => {
     try {
