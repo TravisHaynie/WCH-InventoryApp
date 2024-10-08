@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import InventoryManager from './components/InventoryManager';
-import LogDropdown from './components/LogDropdown'; // Assuming you want to add the log dropdown
+import LogDropdown from './components/LogDropdown';
+const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
+ // Assuming you want to add the log dropdown
 
 const colorfulTitle = (title) => {
   const color = '#FFFFFF'; // White for title
