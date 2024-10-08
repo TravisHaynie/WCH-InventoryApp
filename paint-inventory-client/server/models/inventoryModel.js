@@ -7,7 +7,7 @@ const itemSchema = new mongoose.Schema({
     required: true,
   },
   quantity: {
-    type: Number,
+    type: mongoose.Schema.Types.Mixed, // Allows both number and string
     required: true,
   },
 });

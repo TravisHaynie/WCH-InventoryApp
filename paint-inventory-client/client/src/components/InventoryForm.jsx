@@ -49,7 +49,7 @@ const InventoryForm = ({ addInventoryItem, folders = [], saveInventoryToFolder }
                     <div className="mb-3">
                         <label className="form-label" style={{ color: '#FFA500' }}>Quantity:</label> {/* Orange text */}
                         <input
-                            type="number"
+                            type="text"
                             value={quantity}
                             onChange={(e) => setQuantity(e.target.value)}
                             className="form-control"

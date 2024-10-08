@@ -27,13 +27,13 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                       <div>
                         {/* Buttons to adjust quantity */}
                         <button 
-                          onClick={() => updateQuantity(folder._id, item._id, -1)} 
+                          onClick={() => updateQuantity(folder._id, item._id, item.quantity - 1)} // Decrement
                           className="btn btn-warning btn-sm" 
                           style={{ marginRight: '5px' }}>
                           <i className="bi bi-dash-circle"></i> {/* Bootstrap minus icon */}
                         </button>
                         <button 
-                          onClick={() => updateQuantity(folder._id, item._id, 1)} 
+                          onClick={() => updateQuantity(folder._id, item._id, item.quantity + 1)} // Increment
                           className="btn btn-success btn-sm" 
                           style={{ marginRight: '5px' }}>
                           <i className="bi bi-plus-circle"></i> {/* Bootstrap plus icon */}

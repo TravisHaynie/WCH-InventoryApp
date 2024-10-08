@@ -81,13 +81,11 @@ const InventoryManager = () => {
     }
   };
 
-  const updateQuantity = async (folderId, itemId, amount) => {
+  const updateQuantity = async (folderId, itemId, newQuantity) => {
     const folder = folders.find((f) => f._id === folderId);
     const item = folder.items.find((i) => i._id === itemId);
 
-    const updatedItem = { ...item, quantity: item.quantity + amount };
-    if (updatedItem.quantity < 0) return; // Prevent negative quantities
-
+    const updatedItem = { ...item, quantity: newQuantity };
     try {
       const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
         method: 'PUT',
@@ -101,6 +99,7 @@ const InventoryManager = () => {
       console.error('Error updating quantity:', error);
     }
   };
+  
 
   return (
     <div>
