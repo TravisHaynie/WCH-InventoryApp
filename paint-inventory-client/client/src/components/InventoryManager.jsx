@@ -19,7 +19,7 @@ const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventor
   };
 
   useEffect(() => {
-    if (inventory && inventory.length > 0) {
+    if (Array.isArray(inventory) && inventory.length > 0) {
       console.log("Inventory for selected date: ", inventory); // Log the inventory data
       setFolders(inventory);
     } else if (selectedDate) {
@@ -27,6 +27,7 @@ const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventor
       fetchFolders(selectedDate);
     }
   }, [selectedDate, inventory]);
+  
    // Ensure `inventory` and `selectedDate` are dependencies
 
   const saveInventoryToFolder = async (folderName, item) => {

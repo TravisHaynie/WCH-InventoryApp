@@ -59,13 +59,15 @@ const App = () => {
   
     // Find the log for the selected date and update the selected inventory
     const selectedLog = logs.find(log => log.date === date);
-    if (selectedLog) {
+    if (selectedLog && Array.isArray(selectedLog.inventory)) {
       console.log("Selected Inventory: ", selectedLog.inventory); // Log the inventory data
       setSelectedInventory(selectedLog.inventory); // Set the inventory data for the selected date
     } else {
-      console.log("No log found for this date.");
+      console.log("No valid inventory array found for this date.");
+      setSelectedInventory([]); // Set an empty array if no valid inventory is found
     }
   };
+  
   
 
   return (
