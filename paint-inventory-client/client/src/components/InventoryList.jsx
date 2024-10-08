@@ -16,7 +16,7 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                   onClick={() => deleteFolder(folder._id)} 
                   className="btn btn-danger btn-sm" 
                   style={{ marginLeft: '10px' }}>
-                  <i className="bi bi-trash"></i> Delete Folder
+                  🗑 {/* Trash icon */}
                 </button>
               </div>
               <ul className="list-group list-group-flush">
