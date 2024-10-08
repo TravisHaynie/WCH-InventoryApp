@@ -42,8 +42,8 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                 <div className="folder-actions">
                   <button 
                     onClick={() => handleDownloadFolder(folder)} 
-                    className="btn btn-info btn-sm"
-                    style={{ marginRight: '10px' }}>
+                    className="btn btn-danger btn-sm" // Match size with Del button
+                    style={{ marginRight: '5px' }}>
                     PDF
                   </button>
                   <button 
@@ -72,17 +72,18 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                           style={{ marginRight: '5px' }}>
                           +
                         </button>
-                        {/* Delete Item Button */}
+                        {/* Fix Delete Item Button */}
                         <button 
                           onClick={() => handleDeleteItem(folder._id, item._id)} 
-                          className="delete-btn btn btn-danger btn-sm delete-item-btn">
-                          <i className="bi bi-trash"></i>
+                          className="delete-btn btn btn-danger btn-sm delete-item-btn"
+                          style={{ padding: '5px 8px' }}>
+                          <i className="bi bi-trash"></i> {/* Add trashcan icon */}
                         </button>
                       </div>
                     </li>
                   ))
                 ) : (
-                  <li className="list-group-item" style={{ color: '#FFA500' }}>No items in this folder</li>
+                  <li className="list-group-item" style={{ color: 'black' }}>No items in this folder</li>
                 )}
               </ul>
             </div>
