@@ -5,6 +5,8 @@ const dotenv = require('dotenv');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const cors = require('cors');
 const path = require('path');
+const { saveLogSnapshot } = require('./path/to/logController');
+
 
 
 // Load environment variables from .env file
@@ -28,6 +30,16 @@ app.get('/', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, '../client/dist', 'index.html'));
   });
+
+  app.get('/api/inventory/snapshot', async (req, res) => {
+    try {
+      await saveLogSnapshot();
+      res.json({ message: 'Log snapshot taken' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error taking log snapshot' });
+    }
+  });
+  
 // Connect to MongoDB using Mongoose
 const connectDB = async () => {
   try {
