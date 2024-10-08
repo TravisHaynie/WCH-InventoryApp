@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported for button styling
+import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
 
 const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) => {
   return (
@@ -22,28 +22,28 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
               <ul className="list-group list-group-flush">
                 {folder.items && folder.items.length > 0 ? (
                   folder.items.map((item) => (
-                    <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: '#FFA500' }}>
-                      <span>{item.item} - Quantity: {item.quantity}</span>
-                      <div>
-                        {/* Buttons to adjust quantity */}
-                        <button 
-                          onClick={() => updateQuantity(folder._id, item._id, -1)} 
-                          className="btn btn-warning btn-sm" 
-                          style={{ marginRight: '5px' }}>
-                          <i className="bi bi-dash-circle"></i> {/* Bootstrap minus icon */}
-                        </button>
-                        <button 
-                          onClick={() => updateQuantity(folder._id, item._id, 1)} 
-                          className="btn btn-success btn-sm" 
-                          style={{ marginRight: '5px' }}>
-                          <i className="bi bi-plus-circle"></i> {/* Bootstrap plus icon */}
-                        </button>
-                        {/* Delete Item Button */}
-                        <button 
-                          onClick={() => deleteItem(folder._id, item._id)} 
-                          className="btn btn-danger btn-sm">
-                          <i className="bi bi-trash"></i> Delete
-                        </button>
+                    <li key={item._id} className="list-group-item" style={{ color: '#FFA500' }}>
+                      <div className="d-flex justify-content-between align-items-center">
+                        <span>{item.item} - Quantity: {item.quantity}</span>
+                        <div className="btn-group" style={{ display: 'flex', gap: '10px' }}>
+                          {/* Buttons to adjust quantity */}
+                          <button 
+                            onClick={() => updateQuantity(folder._id, item._id, -1)} 
+                            className="btn btn-warning btn-sm">
+                            <i className="bi bi-dash-circle"></i> {/* Bootstrap minus icon */}
+                          </button>
+                          <button 
+                            onClick={() => updateQuantity(folder._id, item._id, 1)} 
+                            className="btn btn-success btn-sm">
+                            <i className="bi bi-plus-circle"></i> {/* Bootstrap plus icon */}
+                          </button>
+                          {/* Delete Item Button */}
+                          <button 
+                            onClick={() => deleteItem(folder._id, item._id)} 
+                            className="btn btn-danger btn-sm">
+                            <i className="bi bi-trash"></i> Delete
+                          </button>
+                        </div>
                       </div>
                     </li>
                   ))
