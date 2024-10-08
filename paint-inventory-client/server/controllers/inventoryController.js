@@ -25,19 +25,14 @@ const createFolder = async (req, res) => {
       const newFolder = new Folder({ name, items });
       const savedFolder = await newFolder.save();
   
-      // Add or update the log for the current date
-      const log = new Log({
-        date: new Date().toISOString(),
-        inventory: `Inventory for ${name}`,
-      });
-      await log.save();
-  
       res.status(201).json(savedFolder);
     } catch (error) {
       console.error('Error creating folder:', error.message);
       res.status(500).json({ message: 'Server error creating folder' });
     }
   };
+  
+  
 
 // Update folder by adding new items
 const updateFolder = async (req, res) => {

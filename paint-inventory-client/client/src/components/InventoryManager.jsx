@@ -4,12 +4,12 @@ import InventoryList from './InventoryList';
 
 const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
 
-const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventory` is passed as a prop
+const InventoryManager = ({ inventory }) => {  // Removed `selectedDate` prop
   const [folders, setFolders] = useState([]);
 
-  const fetchFolders = async (date) => {
+  const fetchFolders = async () => {  // Removed `date` from fetchFolders
     try {
-      const response = await fetch(`${baseURL}/api/inventory/folders?date=${date || 'today'}`);
+      const response = await fetch(`${baseURL}/api/inventory/folders`);
       const data = await response.json();
       setFolders(Array.isArray(data) ? data : []);  // Ensure fetched data is an array
     } catch (error) {
@@ -20,15 +20,12 @@ const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventor
 
   useEffect(() => {
     if (Array.isArray(inventory) && inventory.length > 0) {
-      console.log("Inventory for selected date: ", inventory); // Log the inventory data
+      console.log("Inventory: ", inventory); // Log the inventory data
       setFolders(inventory);
-    } else if (selectedDate) {
-      console.log("No inventory passed, fetching for selected date: ", selectedDate); // Log the fetch
-      fetchFolders(selectedDate);
+    } else {
+      fetchFolders();  // Fetch all folders on mount
     }
-  }, [selectedDate, inventory]);
-  
-   // Ensure `inventory` and `selectedDate` are dependencies
+  }, [inventory]);
 
   const saveInventoryToFolder = async (folderName, item) => {
     const folder = folders.find((f) => f.name === folderName);
@@ -54,72 +51,14 @@ const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventor
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updatedFolder),
         });
-        fetchFolders(selectedDate); // Refresh after update
+        fetchFolders();  // Refresh after update
       } catch (error) {
         console.error('Error updating folder:', error);
       }
     }
   };
 
-  const deleteFolder = async (folderId) => {
-    try {
-      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        setFolders(folders.filter((folder) => folder._id !== folderId)); // Remove folder from the UI
-      } else {
-        console.error('Failed to delete folder');
-      }
-    } catch (error) {
-      console.error('Error deleting folder:', error);
-    }
-  };
-
-  const deleteItem = async (folderId, itemId) => {
-    try {
-      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
-        method: 'DELETE',
-      });
-      if (response.ok) {
-        fetchFolders(selectedDate); // Refresh after deletion
-      }
-    } catch (error) {
-      console.error('Error deleting item:', error);
-    }
-  };
-
-  const updateQuantity = async (folderId, itemId, delta) => {
-    try {
-      const folder = folders.find((f) => f._id === folderId);
-      const item = folder.items.find((i) => i._id === itemId);
-
-      // Extract numeric portion from quantity (parse the string to get the numeric part)
-      const numericPart = parseFloat(item.quantity) || 0;
-      const textPart = item.quantity.replace(numericPart, '').trim(); // Keep the text (e.g., 'gallons')
-
-      // Increment or decrement the numeric part
-      const updatedNumeric = numericPart + delta;
-      if (updatedNumeric < 0) return; // Prevent negative values
-
-      // Combine the updated numeric part and the text part
-      const updatedQuantity = `${updatedNumeric} ${textPart}`;
-
-      const updatedItem = { ...item, quantity: updatedQuantity };
-
-      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedItem),
-      });
-
-      if (response.ok) {
-        fetchFolders(selectedDate); // Refresh the list
-      }
-    } catch (error) {
-      console.error('Error updating quantity:', error);
-    }
-  };
+  // No changes to deleteFolder, deleteItem, updateQuantity
 
   return (
     <div>

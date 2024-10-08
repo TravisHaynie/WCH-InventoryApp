@@ -1,12 +1,11 @@
 import React from 'react';
 
-const LogDropdown = ({ logs, selectedDate, onDateChange }) => {
+const LogDropdown = ({ logs, onDateChange }) => {
   return (
     <div>
       <label htmlFor="log-dropdown">Select Date: </label>
       <select
         id="log-dropdown"
-        value={selectedDate}
         onChange={(e) => onDateChange(e.target.value)}
       >
         <option value="">Select a log</option>

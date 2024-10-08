@@ -15,34 +15,14 @@ const colorfulTitle = (title) => {
 
 const App = () => {
   const [logs, setLogs] = useState([]); // State to store logs
-  const [selectedDate, setSelectedDate] = useState(''); // State to store selected log date
-  const [selectedInventory, setSelectedInventory] = useState(null); // Store selected inventory
+  const [selectedInventory, setSelectedInventory] = useState(null); // Store selected inventory from logs
 
-  // Function to fetch logs (replace this with your actual API call)
+  // Function to fetch logs
   const fetchLogs = async () => {
     try {
       const response = await fetch(`${baseURL}/api/inventory/logs`);
       const fetchedLogs = await response.json();
-
-      // Get today's date in 'YYYY-MM-DD' format
-      const today = new Date().toISOString().split('T')[0];
-
-      // Check if today's log already exists
-      const todayLogExists = fetchedLogs.some(log => log.date === today);
-
-      // If today's log doesn't exist, fetch inventory data for today
-      if (!todayLogExists) {
-        const todayResponse = await fetch(`${baseURL}/api/inventory/folders?date=${today}`);
-        const todayInventory = await todayResponse.json();
-
-        // If there's inventory data for today, create a log and add it to the logs
-        if (todayInventory.length > 0) {
-          const todayLog = { date: today, inventory: todayInventory };
-          fetchedLogs.unshift(todayLog);  // Add today's log at the beginning
-        }
-      }
-
-      setLogs(fetchedLogs);  // Set logs including today's log if available
+      setLogs(fetchedLogs);  // Set logs
     } catch (error) {
       console.error('Error fetching logs:', error);
     }
@@ -53,26 +33,16 @@ const App = () => {
   }, []);
 
   const handleDateChange = (date) => {
-    console.log("Selected Date: ", date);
-  
-    setSelectedDate(date);
-  
-    // Find the log for the selected date and update the selected inventory
     const selectedLog = logs.find(log => log.date === date);
     if (selectedLog && Array.isArray(selectedLog.inventory)) {
-      console.log("Selected Inventory: ", selectedLog.inventory); // Log the inventory data
       setSelectedInventory(selectedLog.inventory); // Set the inventory data for the selected date
     } else {
-      console.log("No valid inventory array found for this date.");
-      setSelectedInventory([]); // Set an empty array if no valid inventory is found
+      setSelectedInventory([]); // Clear inventory if no valid log is selected
     }
   };
-  
-  
 
   return (
     <div style={{ backgroundColor: '#f0f0f0', height: '100vh', color: 'white' }}>
-      {/* Header Section */}
       <header style={{
         backgroundColor: '#FFA500', // Orange header background
         padding: '20px',
@@ -88,7 +58,6 @@ const App = () => {
             {colorfulTitle('WCH Precision Color')}
           </h1>
         </div>
-        {/* Sub-header Section */}
         <div>
           <h2 className="sub-header" style={{
             color: '#F5F5DC', // Cream color for subtitle
@@ -101,32 +70,30 @@ const App = () => {
         </div>
       </header>
 
-      {/* Main Content with Inventory Manager and Log Dropdown */}
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
-        <LogDropdown logs={logs} selectedDate={selectedDate} onDateChange={handleDateChange} />  {/* Passing logs to dropdown */}
-        <InventoryManager selectedDate={selectedDate} inventory={selectedInventory} />  {/* Passing selected date and inventory to inventory manager */}
+        <LogDropdown logs={logs} onDateChange={handleDateChange} />
+        <InventoryManager inventory={selectedInventory} />  {/* Passing selected inventory from logs */}
       </div>
 
-      {/* Media Query for Responsive Title Size */}
       <style>
         {`
           @media (max-width: 768px) {
             .header-title {
-              font-size: 1.8rem; /* Smaller font size for mobile */
+              font-size: 1.8rem;
             }
 
             .sub-header {
-              font-size: 1.2rem; /* Adjust subtitle size on mobile */
+              font-size: 1.2rem;
             }
           }
 
           @media (min-width: 769px) {
             .header-title {
-              font-size: 3rem; /* Original size for larger screens */
+              font-size: 3rem;
             }
 
             .sub-header {
-              font-size: 1.5rem; /* Subtitle size for larger screens */
+              font-size: 1.5rem;
             }
           }
         `}
