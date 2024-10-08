@@ -2,9 +2,7 @@ import React from 'react';
 import InventoryManager from './components/InventoryManager';
 
 const colorfulTitle = (title) => {
-  // Update to white or cream
-  const color = '#F5F5DC'; // White
-  // const color = '#F5F5DC'; // Cream
+  const color = '#FFFFFF'; // White for title
 
   return title.split('').map((letter, index) => (
     <span key={index} style={{ color: color, fontWeight: 'bold' }}>
@@ -16,6 +14,7 @@ const colorfulTitle = (title) => {
 const App = () => {
   return (
     <div style={{ backgroundColor: '#f0f0f0', height: '100vh', color: 'white' }}>
+      {/* Header Section */}
       <header style={{
         backgroundColor: '#FFA500', // Orange header background
         padding: '20px',
@@ -31,10 +30,20 @@ const App = () => {
             {colorfulTitle('WCH Precision Color')}
           </h1>
         </div>
+        {/* Sub-header Section */}
         <div>
-          <p className="subtitle">Inventory Management System</p>
+          <h2 className="sub-header" style={{
+            color: '#F5F5DC', // Cream color for subtitle
+            marginTop: '10px',
+            fontSize: '1.5rem',
+            textShadow: '1px 1px 3px rgba(0, 0, 0, 0.5)',
+          }}>
+            Inventory Management System
+          </h2>
         </div>
       </header>
+
+      {/* Main Content */}
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
         <InventoryManager />
       </div>
