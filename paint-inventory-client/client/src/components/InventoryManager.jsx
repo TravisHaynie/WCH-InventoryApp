@@ -4,29 +4,29 @@ import InventoryList from './InventoryList';
 
 const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
 
-const InventoryManager = ({ selectedDate, inventory }) => {
+const InventoryManager = ({ selectedDate, inventory }) => {  // Ensure `inventory` is passed as a prop
   const [folders, setFolders] = useState([]);
 
-  // If there's no passed inventory from the selected log, fetch based on the selected date
   const fetchFolders = async (date) => {
     try {
       const response = await fetch(`${baseURL}/api/inventory/folders?date=${date || 'today'}`);
       const data = await response.json();
-      setFolders(data);
+      setFolders(Array.isArray(data) ? data : []);  // Ensure fetched data is an array
     } catch (error) {
       console.error('Error fetching folders:', error);
+      setFolders([]);  // Fallback to an empty array in case of error
     }
   };
 
   useEffect(() => {
-    if (inventory && inventory.length > 0) {
+    if (inventory && Array.isArray(inventory)) {
       // Use the passed inventory if available
       setFolders(inventory);
     } else if (selectedDate) {
       // Fetch inventory if no logs were passed
       fetchFolders(selectedDate);
     }
-  }, [selectedDate, inventory]);
+  }, [selectedDate, inventory]);  // Ensure `inventory` and `selectedDate` are dependencies
 
   const saveInventoryToFolder = async (folderName, item) => {
     const folder = folders.find((f) => f.name === folderName);
