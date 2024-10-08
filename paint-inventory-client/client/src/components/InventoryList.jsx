@@ -44,12 +44,12 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                     onClick={() => handleDownloadFolder(folder)} 
                     className="btn btn-info btn-sm"
                     style={{ marginRight: '10px' }}>
-                    <i className="bi bi-download"></i> Download PDF
+                    <i className="bi bi-download"></i>  PDF
                   </button>
                   <button 
                     onClick={() => handleDeleteFolder(folder._id)} 
                     className="delete-btn btn btn-danger btn-sm">
-                    <i className="bi bi-trash"></i> Delete Folder
+                    <i className="bi bi-trash"></i>  Folder
                   </button>
                 </div>
               </div>
