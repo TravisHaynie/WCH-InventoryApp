@@ -64,17 +64,16 @@ body {
   margin-bottom: 20px; /* Space between cards */
 }
 
+/* Folder title (Orange) */
+.card-body h5 {
+  font-weight: bold;
+  color: #FFA500 !important; /* Orange folder name */
+}
+
 /* Inventory Item Text */
 .list-group-item {
   font-weight: bold;
-  color: black !important; /* Force item text to be black */
-}
-
-/* Folder item text */
-.card-body h5, 
-.card-body ul li {
-  font-weight: bold;
-  color: black !important; /* Ensures folder item text is black */
+  color: black !important; /* Black item text */
 }
 
 /* Footer styling */
