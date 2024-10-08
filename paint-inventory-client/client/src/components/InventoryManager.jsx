@@ -81,17 +81,29 @@ const InventoryManager = () => {
     }
   };
 
-  const updateQuantity = async (folderId, itemId, newQuantity) => {
-    const folder = folders.find((f) => f._id === folderId);
-    const item = folder.items.find((i) => i._id === itemId);
-
-    const updatedItem = { ...item, quantity: newQuantity };
+  const updateQuantity = async (folderId, itemId, delta) => {
     try {
+      const folder = folders.find((f) => f._id === folderId);
+      const item = folder.items.find((i) => i._id === itemId);
+  
+      // Extract numeric portion from quantity
+      const numericPart = parseFloat(item.quantity) || 0;
+      const textPart = item.quantity.replace(numericPart, '').trim(); // Text after numeric
+  
+      // Increment or decrement the numeric portion
+      const updatedNumeric = numericPart + delta;
+      if (updatedNumeric < 0) return; // Prevent negative values
+  
+      const updatedQuantity = `${updatedNumeric} ${textPart}`; // Combine updated number and text
+  
+      const updatedItem = { ...item, quantity: updatedQuantity };
+  
       const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedItem),
       });
+  
       if (response.ok) {
         fetchFolders(); // Refresh the list
       }
