@@ -16,17 +16,19 @@ const App = () => {
   const [logs, setLogs] = useState([]); // State to store logs
   const [selectedDate, setSelectedDate] = useState(''); // State to store selected log date
 
-  // Mock function to fetch logs (replace this with your actual API call)
+  // Function to fetch logs (replace this with your actual API call)
   const fetchLogs = async () => {
-    const fetchedLogs = [
-      { date: '2024-01-01', inventory: 'Inventory data for Jan 1, 2024' },
-      { date: '2024-01-02', inventory: 'Inventory data for Jan 2, 2024' },
-    ];
-    setLogs(fetchedLogs);
+    try {
+      const response = await fetch(`${baseURL}/api/inventory/logs`);  // Change to your backend endpoint for logs
+      const fetchedLogs = await response.json();
+      setLogs(fetchedLogs);  // Set the logs in state based on actual backend data
+    } catch (error) {
+      console.error('Error fetching logs:', error);
+    }
   };
 
   useEffect(() => {
-    fetchLogs();
+    fetchLogs();  // Fetch logs when component mounts
   }, []);
 
   const handleDateChange = (date) => {
