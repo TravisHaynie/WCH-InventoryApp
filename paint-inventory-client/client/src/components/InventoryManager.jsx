@@ -86,15 +86,16 @@ const InventoryManager = () => {
       const folder = folders.find((f) => f._id === folderId);
       const item = folder.items.find((i) => i._id === itemId);
   
-      // Extract numeric portion from quantity
+      // Extract numeric portion from quantity (parse the string to get the numeric part)
       const numericPart = parseFloat(item.quantity) || 0;
-      const textPart = item.quantity.replace(numericPart, '').trim(); // Text after numeric
+      const textPart = item.quantity.replace(numericPart, '').trim(); // Keep the text (e.g., 'gallons')
   
-      // Increment or decrement the numeric portion
+      // Increment or decrement the numeric part
       const updatedNumeric = numericPart + delta;
       if (updatedNumeric < 0) return; // Prevent negative values
   
-      const updatedQuantity = `${updatedNumeric} ${textPart}`; // Combine updated number and text
+      // Combine the updated numeric part and the text part
+      const updatedQuantity = `${updatedNumeric} ${textPart}`;
   
       const updatedItem = { ...item, quantity: updatedQuantity };
   
@@ -111,6 +112,7 @@ const InventoryManager = () => {
       console.error('Error updating quantity:', error);
     }
   };
+  
   
 
   return (

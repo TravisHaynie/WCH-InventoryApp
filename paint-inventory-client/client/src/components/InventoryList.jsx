@@ -1,5 +1,5 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
+import 'bootstrap/dist/css/bootstrap.min.css'; // Ensure Bootstrap is imported for button styling
 
 const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) => {
   return (
@@ -25,23 +25,19 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                     <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: '#FFA500' }}>
                       <span>{item.item} - Quantity: {item.quantity}</span>
                       <div>
-                        {/* Only show increment/decrement buttons if quantity is numeric */}
-                        {typeof item.quantity === 'number' && (
-                          <>
-                            <button 
-                              onClick={() => updateQuantity(folder._id, item._id, item.quantity - 1)} 
-                              className="btn btn-warning btn-sm" 
-                              style={{ marginRight: '5px' }}>
-                              <i className="bi bi-dash-circle"></i> {/* Bootstrap minus icon */}
-                            </button>
-                            <button 
-                              onClick={() => updateQuantity(folder._id, item._id, item.quantity + 1)} 
-                              className="btn btn-success btn-sm" 
-                              style={{ marginRight: '5px' }}>
-                              <i className="bi bi-plus-circle"></i> {/* Bootstrap plus icon */}
-                            </button>
-                          </>
-                        )}
+                        {/* Buttons to adjust quantity */}
+                        <button 
+                          onClick={() => updateQuantity(folder._id, item._id, -1)} 
+                          className="btn btn-warning btn-sm" 
+                          style={{ marginRight: '5px' }}>
+                          <i className="bi bi-dash-circle"></i> {/* Bootstrap minus icon */}
+                        </button>
+                        <button 
+                          onClick={() => updateQuantity(folder._id, item._id, 1)} 
+                          className="btn btn-success btn-sm" 
+                          style={{ marginRight: '5px' }}>
+                          <i className="bi bi-plus-circle"></i> {/* Bootstrap plus icon */}
+                        </button>
                         {/* Delete Item Button */}
                         <button 
                           onClick={() => deleteItem(folder._id, item._id)} 
