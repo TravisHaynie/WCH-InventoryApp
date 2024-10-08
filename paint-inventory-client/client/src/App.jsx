@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import InventoryManager from './components/InventoryManager';
 import LogDropdown from './components/LogDropdown';
 const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
- // Assuming you want to add the log dropdown
 
 const colorfulTitle = (title) => {
   const color = '#FFFFFF'; // White for title
@@ -17,38 +16,37 @@ const colorfulTitle = (title) => {
 const App = () => {
   const [logs, setLogs] = useState([]); // State to store logs
   const [selectedDate, setSelectedDate] = useState(''); // State to store selected log date
+  const [selectedInventory, setSelectedInventory] = useState(null); // Store selected inventory
 
   // Function to fetch logs (replace this with your actual API call)
   const fetchLogs = async () => {
     try {
       const response = await fetch(`${baseURL}/api/inventory/logs`);
       const fetchedLogs = await response.json();
-  
+
       // Get today's date in 'YYYY-MM-DD' format
       const today = new Date().toISOString().split('T')[0];
-  
+
       // Check if today's log already exists
       const todayLogExists = fetchedLogs.some(log => log.date === today);
-  
+
       // If today's log doesn't exist, fetch inventory data for today
       if (!todayLogExists) {
         const todayResponse = await fetch(`${baseURL}/api/inventory/folders?date=${today}`);
         const todayInventory = await todayResponse.json();
-  
+
         // If there's inventory data for today, create a log and add it to the logs
         if (todayInventory.length > 0) {
           const todayLog = { date: today, inventory: todayInventory };
           fetchedLogs.unshift(todayLog);  // Add today's log at the beginning
         }
       }
-  
+
       setLogs(fetchedLogs);  // Set logs including today's log if available
     } catch (error) {
       console.error('Error fetching logs:', error);
     }
   };
-  
-  
 
   useEffect(() => {
     fetchLogs();  // Fetch logs when component mounts
@@ -56,6 +54,12 @@ const App = () => {
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
+
+    // Find the log for the selected date and update the selected inventory
+    const selectedLog = logs.find(log => log.date === date);
+    if (selectedLog) {
+      setSelectedInventory(selectedLog.inventory); // Set the inventory data for the selected date
+    }
   };
 
   return (
@@ -92,7 +96,7 @@ const App = () => {
       {/* Main Content with Inventory Manager and Log Dropdown */}
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
         <LogDropdown logs={logs} selectedDate={selectedDate} onDateChange={handleDateChange} />  {/* Passing logs to dropdown */}
-        <InventoryManager selectedDate={selectedDate} />  {/* Passing selected date to inventory manager */}
+        <InventoryManager selectedDate={selectedDate} inventory={selectedInventory} />  {/* Passing selected date and inventory to inventory manager */}
       </div>
 
       {/* Media Query for Responsive Title Size */}
