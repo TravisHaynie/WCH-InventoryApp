@@ -19,13 +19,32 @@ const App = () => {
   // Function to fetch logs (replace this with your actual API call)
   const fetchLogs = async () => {
     try {
-      const response = await fetch(`${baseURL}/api/inventory/logs`);  // Change to your backend endpoint for logs
+      const response = await fetch(`${baseURL}/api/inventory/logs`);
       const fetchedLogs = await response.json();
-      setLogs(fetchedLogs);  // Set the logs in state based on actual backend data
+  
+      // Get today's date in 'YYYY-MM-DD' format
+      const today = new Date().toISOString().split('T')[0];
+  
+      // Check if today's log already exists
+      const todayLogExists = fetchedLogs.some(log => log.date === today);
+  
+      // If today's log doesn't exist, manually add it to the logs
+      if (!todayLogExists) {
+        const todayResponse = await fetch(`${baseURL}/api/inventory/folders?date=${today}`);
+        const todayLog = await todayResponse.json();
+  
+        // If there's inventory data for today, add it to logs
+        if (todayLog.length > 0) {
+          fetchedLogs.push({ date: today, inventory: todayLog });
+        }
+      }
+  
+      setLogs(fetchedLogs);  // Set logs including today if available
     } catch (error) {
       console.error('Error fetching logs:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchLogs();  // Fetch logs when component mounts
