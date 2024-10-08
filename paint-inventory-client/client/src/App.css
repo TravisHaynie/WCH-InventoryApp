@@ -70,6 +70,7 @@ body {
   font-weight: bold;
   margin-right: 10px;
   flex-grow: 1;
+  text-align: left;
 }
 
 /* Item text styling */
@@ -109,6 +110,26 @@ footer {
   border: none;
   color: white;
   border-radius: 5px;
+}
+
+/* Folder action buttons */
+.folder-actions .download-btn, .folder-actions .delete-folder-btn {
+  font-size: 16px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background-color: #ff6600;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.folder-actions .delete-folder-btn {
+  background-color: red;
+}
+
+.folder-actions .download-btn:hover, .folder-actions .delete-folder-btn:hover {
+  background-color: #ffa500;
 }
 
 /* Adjustments for smaller screens */
@@ -158,11 +179,21 @@ footer {
     display: flex;
     gap: 5px;
     justify-content: flex-end;
+    width: 100%;
+  }
+
+  /* Shorten button labels on smaller screens */
+  .download-btn::after {
+    content: 'PDF';
+  }
+
+  .delete-folder-btn::after {
+    content: 'Del';
   }
 
   .download-btn, .delete-folder-btn {
-    font-size: 14px;
-    padding: 6px 8px;
+    font-size: 12px;
+    padding: 5px 8px;
   }
 }
 
@@ -199,6 +230,7 @@ footer {
   .folder-actions {
     display: flex;
     gap: 10px;
+    justify-content: flex-end;
   }
 
   .download-btn, .delete-folder-btn {
