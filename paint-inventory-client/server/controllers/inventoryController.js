@@ -1,5 +1,5 @@
 const Folder = require('../models/Folder');
-
+const Log = require('../models/Log');
 // Get all folders and populate items
 const getFolders = async (req, res) => {
   try {
@@ -11,46 +11,83 @@ const getFolders = async (req, res) => {
   }
 };
 
+const getLogs = async (req, res) => {
+    try {
+      const today = new Date().toISOString().split('T')[0];
+  
+      // Fetch logs sorted by date and check if today's log exists directly
+      let logs = await Log.find().sort({ date: -1 });
+  
+      const todayInventory = await Folder.find({ date: { $gte: today } });
+      if (todayInventory.length > 0 && !logs.some(log => log.date.toISOString().split('T')[0] === today)) {
+        const todayLog = {
+          date: new Date(),
+          inventory: `Inventory for ${today}`,
+        };
+        logs.unshift(todayLog); // Insert today's log
+      }
+  
+      res.json(logs);
+    } catch (error) {
+      res.status(500).json({ error: 'Error fetching logs' });
+    }
+  };
+
 // Create a new folder and save items
 const createFolder = async (req, res) => {
-  const { name, items } = req.body;
-
-  try {
-    if (!name) {
-      return res.status(400).json({ message: 'Folder name is required' });
+    const { name, items } = req.body;
+  
+    try {
+      if (!name) {
+        return res.status(400).json({ message: 'Folder name is required' });
+      }
+  
+      const newFolder = new Folder({ name, items });
+      const savedFolder = await newFolder.save();
+  
+      // Add or update the log for the current date
+      const log = new Log({
+        date: new Date().toISOString(),
+        inventory: `Inventory for ${name}`,
+      });
+      await log.save();
+  
+      res.status(201).json(savedFolder);
+    } catch (error) {
+      console.error('Error creating folder:', error.message);
+      res.status(500).json({ message: 'Server error creating folder' });
     }
-
-    const newFolder = new Folder({ name, items });
-    const savedFolder = await newFolder.save();
-    res.status(201).json(savedFolder);
-  } catch (error) {
-    console.error('Error creating folder:', error.message);
-    res.status(500).json({ message: 'Server error creating folder' });
-  }
-};
+  };
 
 // Update folder by adding new items
 const updateFolder = async (req, res) => {
-  const { id } = req.params;
-  const { items } = req.body;
-
-  try {
-    const folder = await Folder.findById(id);
-    if (!folder) {
-      return res.status(404).json({ message: 'Folder not found' });
+    const { id } = req.params;
+    const { items } = req.body;
+  
+    try {
+      const folder = await Folder.findById(id);
+      if (!folder) {
+        return res.status(404).json({ message: 'Folder not found' });
+      }
+  
+      items.forEach(itemData => {
+        folder.items.push(itemData);
+      });
+  
+      const updatedFolder = await folder.save();
+  
+      // Log the update
+      const log = new Log({
+        date: new Date().toISOString(),
+        inventory: `Updated inventory for ${folder.name}`,
+      });
+      await log.save();
+  
+      res.json(updatedFolder);
+    } catch (error) {
+      res.status(500).json({ message: 'Server error updating folder' });
     }
-
-    items.forEach(itemData => {
-      folder.items.push(itemData);
-    });
-
-    const updatedFolder = await folder.save();
-    res.json(updatedFolder);
-  } catch (error) {
-    res.status(500).json({ message: 'Server error updating folder' });
-  }
-};
-
+  };
 // Delete a folder
 // Delete a folder
 const deleteFolder = async (req, res) => {
@@ -111,6 +148,7 @@ const updateItemQuantity = async (req, res) => {
 
 module.exports = {
   getFolders,
+  getLogs,
   createFolder,
   updateFolder,
   deleteFolder,
