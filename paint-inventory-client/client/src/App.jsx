@@ -26,7 +26,7 @@ const App = () => {
           borderRadius: '10px',
           display: 'inline-block',
         }}>
-          <h1 className="header-title display-3" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
+          <h1 className="header-title" style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.7)' }}>
             {colorfulTitle('WCH Precision Color')}
           </h1>
         </div>
@@ -47,6 +47,31 @@ const App = () => {
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
         <InventoryManager />
       </div>
+
+      {/* Media Query for Responsive Title Size */}
+      <style>
+        {`
+          @media (max-width: 768px) {
+            .header-title {
+              font-size: 1.8rem; /* Smaller font size for mobile */
+            }
+
+            .sub-header {
+              font-size: 1.2rem; /* Adjust subtitle size on mobile */
+            }
+          }
+
+          @media (min-width: 769px) {
+            .header-title {
+              font-size: 3rem; /* Original size for larger screens */
+            }
+
+            .sub-header {
+              font-size: 1.5rem; /* Subtitle size for larger screens */
+            }
+          }
+        `}
+      </style>
     </div>
   );
 };
