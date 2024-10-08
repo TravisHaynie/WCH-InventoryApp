@@ -11,27 +11,7 @@ const getFolders = async (req, res) => {
   }
 };
 
-const getLogs = async (req, res) => {
-    try {
-      const today = new Date().toISOString().split('T')[0];
-  
-      // Fetch logs sorted by date and check if today's log exists directly
-      let logs = await Log.find().sort({ date: -1 });
-  
-      const todayInventory = await Folder.find({ date: { $gte: today } });
-      if (todayInventory.length > 0 && !logs.some(log => log.date.toISOString().split('T')[0] === today)) {
-        const todayLog = {
-          date: new Date(),
-          inventory: `Inventory for ${today}`,
-        };
-        logs.unshift(todayLog); // Insert today's log
-      }
-  
-      res.json(logs);
-    } catch (error) {
-      res.status(500).json({ error: 'Error fetching logs' });
-    }
-  };
+
 
 // Create a new folder and save items
 const createFolder = async (req, res) => {
@@ -148,7 +128,6 @@ const updateItemQuantity = async (req, res) => {
 
 module.exports = {
   getFolders,
-  getLogs,
   createFolder,
   updateFolder,
   deleteFolder,
