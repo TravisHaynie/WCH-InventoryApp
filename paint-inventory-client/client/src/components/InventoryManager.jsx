@@ -4,10 +4,10 @@ import InventoryList from './InventoryList';
 
 const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
 
-const InventoryManager = ({ inventory }) => {  // Removed `selectedDate` prop
+const InventoryManager = ({ inventory }) => {  
   const [folders, setFolders] = useState([]);
 
-  const fetchFolders = async () => {  // Removed `date` from fetchFolders
+  const fetchFolders = async () => {  
     try {
       const response = await fetch(`${baseURL}/api/inventory/folders`);
       const data = await response.json();
@@ -58,7 +58,61 @@ const InventoryManager = ({ inventory }) => {  // Removed `selectedDate` prop
     }
   };
 
-  // No changes to deleteFolder, deleteItem, updateQuantity
+  const deleteFolder = async (folderId) => {
+    try {
+      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        setFolders(folders.filter((folder) => folder._id !== folderId));  // Remove folder from the UI
+      } else {
+        console.error('Failed to delete folder');
+      }
+    } catch (error) {
+      console.error('Error deleting folder:', error);
+    }
+  };
+
+  const deleteItem = async (folderId, itemId) => {
+    try {
+      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        fetchFolders();  // Refresh after deletion
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
+
+  const updateQuantity = async (folderId, itemId, delta) => {
+    try {
+      const folder = folders.find((f) => f._id === folderId);
+      const item = folder.items.find((i) => i._id === itemId);
+
+      const numericPart = parseFloat(item.quantity) || 0;
+      const textPart = item.quantity.replace(numericPart, '').trim();  // Keep the text (e.g., 'gallons')
+
+      const updatedNumeric = numericPart + delta;
+      if (updatedNumeric < 0) return;  // Prevent negative values
+
+      const updatedQuantity = `${updatedNumeric} ${textPart}`;
+      const updatedItem = { ...item, quantity: updatedQuantity };
+
+      const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedItem),
+      });
+
+      if (response.ok) {
+        fetchFolders();  // Refresh the list
+      }
+    } catch (error) {
+      console.error('Error updating quantity:', error);
+    }
+  };
 
   return (
     <div>
