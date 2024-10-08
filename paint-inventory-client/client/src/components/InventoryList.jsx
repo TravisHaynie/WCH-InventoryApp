@@ -58,7 +58,7 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                   folder.items.map((item) => (
                     <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: 'black' }}>
                       <span>{item.item} - Quantity: {item.quantity}</span>
-                      <div>
+                      <div className="d-flex align-items-center">
                         {/* Buttons to adjust quantity */}
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, -1)} 
@@ -72,11 +72,11 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                           style={{ marginRight: '5px' }}>
                           +
                         </button>
-                        {/* Delete Item Button with Confirmation */}
+                        {/* Restore Delete Item Button with trashcan icon */}
                         <button 
                           onClick={() => handleDeleteItem(folder._id, item._id)} 
                           className="delete-btn btn btn-danger btn-sm">
-                          <i className="bi bi-trash"></i> Delete
+                          <i className="bi bi-trash"></i>
                         </button>
                       </div>
                     </li>

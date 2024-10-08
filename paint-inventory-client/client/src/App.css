@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-size: cover;
+  background-size: cover; /* Cover the entire viewport */
   background-position: center;
 }
 
@@ -53,27 +53,15 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  border: 2px solid #FF5733; /* Orange border */
+  border: 2px solid #FF5733; /* Match with button colors */
 }
 
 .card-background {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-
-/* Folder title (Orange) */
-.card-body h5 {
-  font-weight: bold;
-  color: #FFA500 !important; /* Orange folder titles */
-}
-
-/* Inventory Item Text (Black) */
-.list-group-item span {
-  color: black !important; /* Black item text */
-  font-weight: bold;
+  background-color: #f9f9f9; /* Light gray background */
+  border: 1px solid #e0e0e0; /* Subtle border */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px; /* Padding inside the card */
+  margin-bottom: 20px; /* Space between cards */
 }
 
 /* Footer styling */
@@ -95,40 +83,30 @@ button {
   border-radius: 5px;
 }
 
-/* Increment/Decrement buttons */
-.increment-btn, .decrement-btn {
-  font-size: 1.5em; /* Bold and large icon */
-  background-color: transparent; /* No background */
-  border: none;
-  color: #FF5733; /* Orange color for the buttons */
-  padding: 5px;
-  cursor: pointer;
+/* Increment and delete button styling */
+.increment-btn {
+  padding: 5px 10px;
+  margin: 0 2px;
+  font-size: 16px;
 }
 
-.increment-btn:hover, .decrement-btn:hover {
-  color: #FF33A1; /* Change color on hover */
-}
-
-.increment-btn:focus, .decrement-btn:focus {
-  outline: none;
-}
-
-/* Delete Button */
 .delete-btn {
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 5px; /* Slightly rounded edges */
-  cursor: pointer;
+  padding: 5px 10px;
+  margin-left: 10px;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
-.delete-btn:hover {
-  background-color: darkred; /* Darker red on hover */
+/* Folder title styling */
+.card-title {
+  color: #FFA500;
+  font-weight: bold;
 }
 
-.delete-btn:focus {
-  outline: none;
+/* Item text styling */
+.list-group-item {
+  color: black;
+  font-weight: bold;
 }
 
 /* For screens smaller than 768px (typical mobile sizes) */
@@ -151,9 +129,11 @@ button {
     margin: 2px;
   }
 
-  /* Title styling for smaller screens */
-  .header-title {
-    font-size: 2.2rem;
+  .increment-btn, .delete-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 5px;
   }
 }
 
@@ -168,10 +148,5 @@ button {
   .item-actions {
     display: flex;
     gap: 10px;
-  }
-
-  /* Title styling for larger screens */
-  .header-title {
-    font-size: 3rem;
   }
 }
