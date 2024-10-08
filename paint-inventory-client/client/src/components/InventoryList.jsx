@@ -1,24 +1,21 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
+import { jsPDF } from "jspdf"; // Import jsPDF
 
 const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) => {
 
-  // Function to download folder data as JSON
+  // Function to download folder data as PDF
   const handleDownloadFolder = (folder) => {
-    const folderData = {
-      name: folder.name,
-      items: folder.items.map(item => ({
-        item: item.item,
-        quantity: item.quantity
-      }))
-    };
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Folder Name: " + folder.name, 10, 10);
 
-    const blob = new Blob([JSON.stringify(folderData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${folder.name}.json`; // File name with folder name
-    link.click();
+    doc.setFontSize(12);
+    folder.items.forEach((item, index) => {
+      doc.text(`${index + 1}. ${item.item} - Quantity: ${item.quantity}`, 10, 20 + (index * 10));
+    });
+
+    doc.save(`${folder.name}.pdf`); // Save as PDF file
   };
 
   const handleDeleteItem = (folderId, itemId) => {
@@ -42,13 +39,12 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
             <div className="card-body">
               <div className="d-flex justify-content-between align-items-center">
                 <h5 className="card-title" style={{ color: '#FFA500' }}>{folder.name}</h5>
-                {/* Delete Folder Button */}
                 <div>
                   <button 
                     onClick={() => handleDownloadFolder(folder)} 
                     className="btn btn-info btn-sm"
                     style={{ marginRight: '10px' }}>
-                    <i className="bi bi-download"></i> Download Folder
+                    <i className="bi bi-download"></i> Download PDF
                   </button>
                   <button 
                     onClick={() => handleDeleteFolder(folder._id)} 
@@ -68,13 +64,13 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                           onClick={() => updateQuantity(folder._id, item._id, -1)} 
                           className="increment-btn btn btn-warning btn-sm"
                           style={{ marginRight: '5px' }}>
-                          <i className="bi bi-dash-circle"></i>
+                          -
                         </button>
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, 1)} 
                           className="increment-btn btn btn-success btn-sm"
                           style={{ marginRight: '5px' }}>
-                          <i className="bi bi-plus-circle"></i>
+                          +
                         </button>
                         {/* Delete Item Button with Confirmation */}
                         <button 
