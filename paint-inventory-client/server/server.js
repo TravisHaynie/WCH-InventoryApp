@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 const inventoryRoutes = require('./routes/inventoryRoutes');
 const cors = require('cors');
 const path = require('path');
-const { saveLogSnapshot } = require('./path/to/logController');
+const { saveLogSnapshot } = require('./controllers/logController');
 
 
 
