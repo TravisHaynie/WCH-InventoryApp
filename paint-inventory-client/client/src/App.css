@@ -67,7 +67,13 @@ body {
 /* Folder title (Orange) */
 .card-body h5 {
   font-weight: bold;
-  color: #FFA500 !important; /* Orange folder name */
+  color: #FFA500 !important; /* Orange folder and subfolder titles */
+}
+
+/* Subfolder title (Orange) */
+.list-group-item span {
+  color: #FFA500 !important; /* Orange subfolder titles */
+  font-weight: bold; /* Make sure it's bold */
 }
 
 /* Inventory Item Text */
