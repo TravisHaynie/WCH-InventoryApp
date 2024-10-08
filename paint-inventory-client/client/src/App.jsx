@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import InventoryManager from './components/InventoryManager';
 import LogDropdown from './components/LogDropdown'; // Assuming you want to add the log dropdown
 
@@ -13,6 +13,26 @@ const colorfulTitle = (title) => {
 };
 
 const App = () => {
+  const [logs, setLogs] = useState([]); // State to store logs
+  const [selectedDate, setSelectedDate] = useState(''); // State to store selected log date
+
+  // Mock function to fetch logs (replace this with your actual API call)
+  const fetchLogs = async () => {
+    const fetchedLogs = [
+      { date: '2024-01-01', inventory: 'Inventory data for Jan 1, 2024' },
+      { date: '2024-01-02', inventory: 'Inventory data for Jan 2, 2024' },
+    ];
+    setLogs(fetchedLogs);
+  };
+
+  useEffect(() => {
+    fetchLogs();
+  }, []);
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
   return (
     <div style={{ backgroundColor: '#f0f0f0', height: '100vh', color: 'white' }}>
       {/* Header Section */}
@@ -46,8 +66,8 @@ const App = () => {
 
       {/* Main Content with Inventory Manager and Log Dropdown */}
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
-        <LogDropdown />  {/* Assuming you want to display past logs via dropdown */}
-        <InventoryManager />
+        <LogDropdown logs={logs} selectedDate={selectedDate} onDateChange={handleDateChange} />  {/* Passing logs to dropdown */}
+        <InventoryManager selectedDate={selectedDate} />  {/* Passing selected date to inventory manager */}
       </div>
 
       {/* Media Query for Responsive Title Size */}

@@ -4,12 +4,12 @@ import InventoryList from './InventoryList';
 
 const baseURL = import.meta.env.VITE_API_URL || 'https://wch-inventoryapp.onrender.com';
 
-const InventoryManager = () => {
+const InventoryManager = ({ selectedDate }) => {
   const [folders, setFolders] = useState([]);
 
-  const fetchFolders = async () => {
+  const fetchFolders = async (date) => {
     try {
-      const response = await fetch(`${baseURL}/api/inventory/folders`);
+      const response = await fetch(`${baseURL}/api/inventory/folders?date=${date || 'today'}`);
       const data = await response.json();
       setFolders(data);
     } catch (error) {
@@ -18,8 +18,8 @@ const InventoryManager = () => {
   };
 
   useEffect(() => {
-    fetchFolders();
-  }, []);
+    fetchFolders(selectedDate);  // Fetch inventory for selected date
+  }, [selectedDate]);
 
   const saveInventoryToFolder = async (folderName, item) => {
     const folder = folders.find((f) => f.name === folderName);
@@ -45,7 +45,7 @@ const InventoryManager = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(updatedFolder),
         });
-        fetchFolders(); // Refresh after update
+        fetchFolders(selectedDate); // Refresh after update
       } catch (error) {
         console.error('Error updating folder:', error);
       }
@@ -66,7 +66,6 @@ const InventoryManager = () => {
       console.error('Error deleting folder:', error);
     }
   };
-  
 
   const deleteItem = async (folderId, itemId) => {
     try {
@@ -74,7 +73,7 @@ const InventoryManager = () => {
         method: 'DELETE',
       });
       if (response.ok) {
-        fetchFolders(); // Refresh after deletion
+        fetchFolders(selectedDate); // Refresh after deletion
       }
     } catch (error) {
       console.error('Error deleting item:', error);
@@ -85,35 +84,33 @@ const InventoryManager = () => {
     try {
       const folder = folders.find((f) => f._id === folderId);
       const item = folder.items.find((i) => i._id === itemId);
-  
+
       // Extract numeric portion from quantity (parse the string to get the numeric part)
       const numericPart = parseFloat(item.quantity) || 0;
       const textPart = item.quantity.replace(numericPart, '').trim(); // Keep the text (e.g., 'gallons')
-  
+
       // Increment or decrement the numeric part
       const updatedNumeric = numericPart + delta;
       if (updatedNumeric < 0) return; // Prevent negative values
-  
+
       // Combine the updated numeric part and the text part
       const updatedQuantity = `${updatedNumeric} ${textPart}`;
-  
+
       const updatedItem = { ...item, quantity: updatedQuantity };
-  
+
       const response = await fetch(`${baseURL}/api/inventory/folders/${folderId}/items/${itemId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedItem),
       });
-  
+
       if (response.ok) {
-        fetchFolders(); // Refresh the list
+        fetchFolders(selectedDate); // Refresh the list
       }
     } catch (error) {
       console.error('Error updating quantity:', error);
     }
   };
-  
-  
 
   return (
     <div>
