@@ -52,24 +52,22 @@ const updateFolder = async (req, res) => {
 };
 
 // Delete a folder
+// Delete a folder
 const deleteFolder = async (req, res) => {
-    const { id } = req.params; // Fetch folder id from URL parameter
+    const { id } = req.params;
   
     try {
-      console.log('Attempting to delete folder with ID:', id); // Debugging log
-      const folder = await Folder.findById(id);
+      const folder = await Folder.findByIdAndDelete(id); // Use findByIdAndDelete instead of remove()
       if (!folder) {
-        console.log('Folder not found:', id); // Debugging log
         return res.status(404).json({ message: 'Folder not found' });
       }
-  
-      await folder.remove(); // This should delete the folder
       res.json({ message: 'Folder deleted successfully' });
     } catch (error) {
-      console.error('Error deleting folder:', error.message); // Improved logging
-      res.status(500).json({ message: 'Server error deleting folder: ' + error.message });
+      console.error('Error deleting folder:', error.message);
+      res.status(500).json({ message: 'Server error deleting folder' });
     }
   };
+  
   
 
 // Delete an item from a folder
