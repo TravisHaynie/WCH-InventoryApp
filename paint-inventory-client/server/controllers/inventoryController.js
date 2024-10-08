@@ -89,17 +89,18 @@ const deleteItem = async (req, res) => {
 // Update item quantity in a folder
 const updateItemQuantity = async (req, res) => {
     const { folderId, itemId } = req.params;
-    const { quantity } = req.body; // This should be the combined numeric + text string
+    const { quantity } = req.body;
   
     try {
       const folder = await Folder.findById(folderId);
       if (!folder) return res.status(404).json({ message: 'Folder not found' });
   
-      const item = folder.items.find((item) => item._id.toString() === itemId);
+      const item = folder.items.id(itemId);
       if (!item) return res.status(404).json({ message: 'Item not found' });
   
-      // Update the quantity with the new value (which includes both number and text)
       item.quantity = quantity;
+      item.updatedAt = Date.now();  // Update the timestamp when quantity is changed
+  
       await folder.save();
       res.json({ message: 'Item quantity updated', folder });
     } catch (error) {

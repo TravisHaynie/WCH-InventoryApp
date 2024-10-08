@@ -1,5 +1,6 @@
 import React from 'react';
 import InventoryManager from './components/InventoryManager';
+import LogDropdown from './components/LogDropdown'; // Assuming you want to add the log dropdown
 
 const colorfulTitle = (title) => {
   const color = '#FFFFFF'; // White for title
@@ -43,8 +44,9 @@ const App = () => {
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Main Content with Inventory Manager and Log Dropdown */}
       <div className="App" style={{ padding: '20px', position: 'relative' }}>
+        <LogDropdown />  {/* Assuming you want to display past logs via dropdown */}
         <InventoryManager />
       </div>
 

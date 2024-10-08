@@ -1,6 +1,6 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Make sure Bootstrap is imported
-import { jsPDF } from "jspdf"; // Import jsPDF
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { jsPDF } from 'jspdf';  // For generating PDF
 
 const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) => {
 
@@ -15,7 +15,7 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
       doc.text(`${index + 1}. ${item.item} - Quantity: ${item.quantity}`, 10, 20 + (index * 10));
     });
 
-    doc.save(`${folder.name}.pdf`); // Save as PDF file
+    doc.save(`${folder.name}.pdf`);  // Save as PDF file
   };
 
   const handleDeleteItem = (folderId, itemId) => {
@@ -32,18 +32,19 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
 
   return (
     <div className="card" style={{ backgroundColor: '#333333', border: '1px solid #e0e0e0', padding: '10px', borderRadius: '8px' }}>
-      <h2 className="mb-4" style={{ color: '#FFA500' }}>Folders</h2>
+      <h2 className="mb-4" style={{ color: '#FFA500' }}>Folders</h2> {/* Orange text */}
       {folders.length > 0 ? (
         folders.map((folder) => (
           <div key={folder._id} className="card mb-3" style={{ backgroundColor: '#444444', color: '#FFA500' }}>
             <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center folder-header">
-                <h5 className="folder-title" style={{ color: '#FFA500', flexGrow: 1 }}>{folder.name}</h5> {/* Folder title */} 
-                <div className="folder-actions">
+              <div className="d-flex justify-content-between align-items-center">
+                <h5 className="card-title" style={{ color: '#FFA500' }}>{folder.name}</h5>
+                <span style={{ color: '#cccccc', fontStyle: 'italic' }}>Created on: {new Date(folder.date).toLocaleDateString()}</span>
+                <div>
                   <button 
                     onClick={() => handleDownloadFolder(folder)} 
-                    className="btn btn-danger btn-sm" // Match size with Del button
-                    style={{ marginRight: '5px' }}>
+                    className="btn btn-info btn-sm"
+                    style={{ marginRight: '10px' }}>
                     PDF
                   </button>
                   <button 
@@ -58,26 +59,26 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                   folder.items.map((item) => (
                     <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: 'black' }}>
                       <span>{item.item} - Quantity: {item.quantity}</span>
-                      <div className="d-flex align-items-center item-actions">
+                      <span style={{ color: '#cccccc', fontStyle: 'italic', fontSize: '0.9em' }}>Last updated: {new Date(item.updatedAt).toLocaleTimeString()}</span>
+                      <div className="d-flex align-items-center">
                         {/* Buttons to adjust quantity */}
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, -1)} 
-                          className="increment-btn btn btn-link btn-sm"
+                          className="increment-btn btn btn-warning btn-sm"
                           style={{ marginRight: '5px' }}>
                           -
                         </button>
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, 1)} 
-                          className="increment-btn btn btn-link btn-sm"
+                          className="increment-btn btn btn-success btn-sm"
                           style={{ marginRight: '5px' }}>
                           +
                         </button>
-                        {/* Fix Delete Item Button */}
+                        {/* Restore Delete Item Button with trashcan icon */}
                         <button 
                           onClick={() => handleDeleteItem(folder._id, item._id)} 
-                          className="delete-btn btn btn-danger btn-sm delete-item-btn"
-                          style={{ padding: '5px 8px' }}>
-                          <i className="bi bi-trash"></i> {/* Add trashcan icon */}
+                          className="delete-btn btn btn-danger btn-sm">
+                          <i className="bi bi-trash"></i>
                         </button>
                       </div>
                     </li>
