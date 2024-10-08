@@ -2,7 +2,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-size: cover; /* Cover the entire viewport */
+  background-size: cover;
   background-position: center;
 }
 
@@ -34,7 +34,7 @@ body {
 
 /* Button styling */
 .btn-primary {
-  background-color: #FF5733; /* Bright orange button */
+  background-color: #FF5733;
   border: none;
   color: white;
   padding: 10px 20px;
@@ -44,7 +44,7 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #FF33A1; /* Bright pink hover effect */
+  background-color: #FF33A1;
 }
 
 /* Card styling for folders and items */
@@ -53,21 +53,23 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  border: 2px solid #FF5733; /* Orange border for cards */
+  border: 2px solid #FF5733;
 }
 
 .card-background {
-  background-color: #f9f9f9; /* Light gray background */
-  border: 1px solid #e0e0e0; /* Subtle border */
-  border-radius: 8px; /* Rounded corners */
-  padding: 20px; /* Padding inside the card */
-  margin-bottom: 20px; /* Space between cards */
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 /* Folder title styling */
 .card-title {
-  color: #FFA500; /* Orange title */
+  color: #FFA500;
   font-weight: bold;
+  margin-right: 10px;
+  flex-grow: 1; /* Allow the title to take up remaining space */
 }
 
 /* Item text styling */
@@ -109,7 +111,7 @@ footer {
   border-radius: 5px;
 }
 
-/* For screens smaller than 768px (typical mobile sizes) */
+/* Adjustments for smaller screens */
 @media (max-width: 768px) {
   .item-container {
     display: flex;
@@ -134,9 +136,37 @@ footer {
     width: auto;
     margin: 5px 0;
   }
+
+  /* Folder title and buttons layout for small screens */
+  .folder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .folder-title {
+    flex: 1;
+    text-align: left;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #FFA500;
+    font-weight: bold;
+  }
+
+  .folder-actions {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+  }
+
+  .download-btn, .delete-folder-btn {
+    font-size: 14px;
+    padding: 6px 8px;
+  }
 }
 
-/* For screens larger than 768px (desktop, tablets) */
+/* Adjustments for larger screens */
 @media (min-width: 769px) {
   .item-container {
     display: flex;
@@ -152,5 +182,27 @@ footer {
   .increment-btn, .delete-btn {
     font-size: 18px;
     width: auto;
+  }
+
+  .folder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .folder-title {
+    font-size: 1.5rem;
+    color: #FFA500;
+    font-weight: bold;
+  }
+
+  .folder-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .download-btn, .delete-folder-btn {
+    font-size: 16px;
+    padding: 8px 10px;
   }
 }
