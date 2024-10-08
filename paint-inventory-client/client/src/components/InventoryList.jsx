@@ -37,31 +37,36 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
         folders.map((folder) => (
           <div key={folder._id} className="card mb-3" style={{ backgroundColor: '#444444', color: '#FFA500' }}>
             <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center">
-                <h5 className="card-title" style={{ color: '#FFA500' }}>{folder.name}</h5>
-                <span style={{ color: '#cccccc', fontStyle: 'italic' }}>Created on: {new Date(folder.date).toLocaleDateString()}</span>
-                <div>
-                  <button 
-                    onClick={() => handleDownloadFolder(folder)} 
-                    className="btn btn-info btn-sm"
-                    style={{ marginRight: '10px' }}>
-                    PDF
-                  </button>
-                  <button 
-                    onClick={() => handleDeleteFolder(folder._id)} 
-                    className="delete-btn btn btn-danger btn-sm">
-                    Del
-                  </button>
+              {/* Folder Title on top */}
+              <div className="d-flex justify-content-between align-items-center flex-column">
+                <h5 className="card-title text-left" style={{ color: '#FFA500', width: '100%' }}>{folder.name}</h5>
+
+                {/* Sub-headers (Created on date and buttons) */}
+                <div className="d-flex justify-content-between align-items-center w-100 mt-2">
+                  <span style={{ color: '#cccccc', fontStyle: 'italic' }}>Created on: {new Date(folder.date).toLocaleDateString()}</span>
+                  <div>
+                    <button 
+                      onClick={() => handleDownloadFolder(folder)} 
+                      className="btn btn-info btn-sm"
+                      style={{ marginRight: '10px' }}>
+                      PDF
+                    </button>
+                    <button 
+                      onClick={() => handleDeleteFolder(folder._id)} 
+                      className="delete-btn btn btn-danger btn-sm">
+                      Del
+                    </button>
+                  </div>
                 </div>
               </div>
-              <ul className="list-group list-group-flush">
+              
+              <ul className="list-group list-group-flush mt-2">
                 {folder.items && folder.items.length > 0 ? (
                   folder.items.map((item) => (
                     <li key={item._id} className="list-group-item d-flex justify-content-between align-items-center" style={{ color: 'black' }}>
                       <span>{item.item} - Quantity: {item.quantity}</span>
                       <span style={{ color: '#cccccc', fontStyle: 'italic', fontSize: '0.9em' }}>Last updated: {new Date(item.updatedAt).toLocaleTimeString()}</span>
                       <div className="d-flex align-items-center">
-                        {/* Buttons to adjust quantity */}
                         <button 
                           onClick={() => updateQuantity(folder._id, item._id, -1)} 
                           className="increment-btn btn btn-warning btn-sm"
@@ -74,7 +79,6 @@ const InventoryList = ({ folders, deleteFolder, deleteItem, updateQuantity }) =>
                           style={{ marginRight: '5px' }}>
                           +
                         </button>
-                        {/* Restore Delete Item Button with trashcan icon */}
                         <button 
                           onClick={() => handleDeleteItem(folder._id, item._id)} 
                           className="delete-btn btn btn-danger btn-sm">
