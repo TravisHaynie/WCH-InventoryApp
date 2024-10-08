@@ -70,6 +70,13 @@ body {
   color: black !important; /* Force item text to be black */
 }
 
+/* Folder item text */
+.card-body h5, 
+.card-body ul li {
+  font-weight: bold;
+  color: black !important; /* Ensures folder item text is black */
+}
+
 /* Footer styling */
 footer {
   text-align: center;
