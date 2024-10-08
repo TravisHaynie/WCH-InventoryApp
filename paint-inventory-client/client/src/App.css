@@ -67,7 +67,7 @@ body {
 /* Inventory Item Text */
 .list-group-item {
   font-weight: bold;
-  color: black; /* Make the item text bold and black for better visibility */
+  color: black !important; /* Force item text to be black */
 }
 
 /* Footer styling */
